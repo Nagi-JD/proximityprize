@@ -1363,3 +1363,107 @@ proofs stated over `SPMF` retain that contract through `evalSPMF` and its lemmas
 `evalDist` / `𝒟[·]` surface denotes a measure and is not a drop-in replacement for an
 SPMF equality or total-variation argument. Keep these representations explicit instead
 of adding measurable-space assumptions to repair an elaboration error.
+Thirty-seven library modules now pass ordinary compilation and installed audits
+of 362 selected declarations with only standard axioms. This batch includes the
+Ajtai binding reduction, coding-theory and interpolation algebra, proximity bounds,
+Stepanov/cyclotomic results, and the Boolean sum-check cube sum bridge. The repairs
+preserve existing hypotheses; symbolic-length coefficient recovery and symbolic
+exponent comparisons avoid evaluating enormous concrete expressions. Existing
+conditional results and counterexamples remain distinct from production closure.
+
+
+Nine further coding-theory and transcript-security modules pass ordinary compilation
+and installed audits of 51 selected declarations. The zero-knowledge and random-query
+proofs use the current SPMF distribution API while retaining their transcript and
+abort semantics. The selected MDS, collision, resultant, and toy-soundness results
+remain axiom-clean with their original hypotheses.
+
+
+Ten further library modules pass ordinary compilation and installed audits of
+46 selected declarations, including context-lifting completeness and round-by-round
+security, claim reduction, restricted-sumset bounds, subspace polynomials, and the
+Mathlib-backed monic-division compatibility import. The historical commented-out
+context-lifting knowledge-soundness draft is not counted as a proved declaration.
+
+
+Eight propagation, core-embedding, moment, superelliptic, and wave-kernel research
+modules pass ordinary compilation and installed audits of 39 selected declarations
+with only standard axioms. Membership and coercion steps are explicit, the Kummer
+criterion has its own import, and concrete slot arithmetic uses kernel evaluation.
+The conditional moment bounds and no-go results retain their original scope.
+
+
+Five finite-free, rank, spectrum, and pair-concentration research modules pass
+ordinary compilation and installed audits of 35 selected declarations with only
+standard axioms. The migration uses explicit finite-vector extensionality, current
+span/rank APIs, a prime-tactic import, and removes simplification steps that no
+longer make progress. These changes preserve the original mathematical claims.
+
+
+Three saturated-incidence, subgroup Gauss-sum, and prime-supply research modules
+pass their ordinary build and installed audits of 41 selected declarations using
+only standard axioms. These Lean 4.34 repairs retain the conditional reduction
+interfaces and explicit prime-supply hypotheses; they do not prove the open
+production proximity-gap conjecture.
+
+
+Five dilation-invariance, collision-moment, strata-count, and injective-packet
+research modules pass ordinary compilation and installed audits of 74 selected
+declarations with only standard axioms. The proof repairs use explicit finite-sum
+identities and kernel-checked concrete arithmetic. Their conditional bounds and
+frequency-invariance obstructions retain their original scope.
+
+
+The native guarded-verifier foundation now passes ordinary compilation and installed
+audits of 12 selected declarations using only standard axioms. It packages deterministic
+verdicts with a Boolean check, preserves abort-on-reject behavior, composes guarded
+forms, and adapts the queried-message guard to the native oracle-output routing.
+Worst-case round-by-round security and guarded sequential-composition proofs remain
+separate transfers; this foundation does not establish those capstones.
+
+
+The low-rate strict-slack half-radius research counterexample passes ordinary
+compilation and installed audits of five selected geometric declarations using
+only standard axioms. Its parity-column independence proof now applies the
+Reed–Solomon MDS theorem directly. This preserves the existing obstruction; it
+is not a positive proof of the production proximity-gap claim.
+
+
+Seven Jensen, cyclotomic-obstruction, finite-field arithmetic, and r-fold variance
+research modules pass ordinary compilation and installed audits of 248 selected
+declarations with only standard axioms. This includes the variance module's 229
+explicit audit roots. Repairs preserve the existing conditions and counterexamples,
+using explicit arithmetic identities and kernel evaluation of concrete values.
+
+
+Four energy, Gaussian-moment, operator, and orbit research modules pass ordinary compilation and installed audits of 38 selected declarations using only standard axioms. These Lean 4.34 compatibility repairs preserve their hypotheses, conditional results, and existing no-go boundaries.
+
+
+The explicit-round transcript projection module passes ordinary compilation and installed audits of 12 declarations using only standard axioms. Its left/right projections, concatenation laws, and heterogeneous equality bridge adapt the upstream API to native partial transcripts, including the native empty-right-prefix branch. Guarded sequential composition remains a separately qualified transfer.
+
+
+The half-distance lattice-threshold module passes its ordinary build and installed audits of seven declarations using only standard axioms. The interleaved separation proof uses explicit filter membership and retains its distance, rate, and budget hypotheses.
+
+
+Three threshold-collapse, tower-ratio, and Hasse–Davenport coset-ladder modules pass ordinary builds and installed audits of 23 declarations using only standard axioms. The repairs add the explicit complex-character import and use the current limit API without changing the mathematical statements.
+
+
+The candidate-list batching bound and its regression module pass ordinary builds and installed audits of 14 declarations using only standard axioms. The bound charges at most L times the strategy error for an incorrect member of a fixed pre-challenge list. Concrete tests attain the bound, exclude correct candidates, and refute the analogous bound for adaptive lists or events that include the correct candidate. This does not establish adaptive extraction or a full ring-switching security theorem.
+
+
+Five native modules for worst-case round-by-round contracts, generic challenge-game bounds, guarded two-message security, challenge sampling transport, and heterogeneous equality pass ordinary compilation and installed audits of 26 selected declarations with only standard axioms. Worst-case bounds imply the existing averaged games through the native probability API. Extractor-specific contracts keep the extractor and knowledge-state function visible. Binary and n-ary composition capstones remain separate transfers.
+
+
+Native claim reduction and STIR vector completeness pass ordinary builds and installed audits of eight selected declarations using only standard axioms. The claim proofs normalize current OptionT simulation; the STIR proof pins the empty ambient oracle and challenge interfaces without adding completeness hypotheses. This is completeness and honest-verifier zero knowledge, not the pending STIR security theorem.
+
+
+Fourteen native Sumcheck interaction modules and the adapted single-round projection API pass ordinary builds and installed audits of 114 declarations using only standard axioms. The transfer covers actual committed-before-challenge execution, multivariate soundness, round-by-round certificates, state restoration, and expected distinct-query budgets. Abort behavior, the source distribution law, polynomial realizations, and extractor assumptions remain explicit. An isolated-module build caught and repaired the missing NativeMeasure import in Soundness; combined source checks alone had not exposed it.
+
+
+The concrete GF(4)/GF(2) orientation regression passes an ordinary build and installed audits of 17 declarations using only standard axioms. It checks that native rows recover the original evaluation while columns feed batching, and that the final scalar matches the actual batched multiplier. The fixtures are public for downstream conformance work; the complete modern Binius protocol transfer is still pending.
+
+
+Nine additional research modules now build under native Lean 4.34: maximal-minor certificates, resultant lattice indices, split embeddings, rank-nullity, triangle constraints, random-sign gates, Gauss-period consumers, and two threshold/counting modules. The ordinary 8,996-job target build passed; installed-module audits checked 52 declaration roots using only standard Lean axioms. Changes adapt elaboration and current Mathlib APIs while preserving theorem statements and hypotheses.
+
+
+The later 2026-10-08 refresh adds ArkLib PRs #1298 and #1299 (55 open PRs total). The retirement in #1298 must not be applied mechanically: our corresponding six protocol files contain no `sorry` tokens and include proved conditional/component results. #1299 provides useful generic determinant and multilinear-weight lemmas and repairs the donor bad-event relation. Native `badEventExistsProp_of_lt` already diagnoses the legacy vacuous escape; replacing that relation requires migrating its dependent protocol proofs and retaining explicit component assumptions. Generic lemma transfer is being qualified separately from that protocol migration.

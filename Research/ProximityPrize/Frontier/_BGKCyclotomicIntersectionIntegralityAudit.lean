@@ -302,11 +302,8 @@ def requiredLeakage : Nat := (8264 * productionN + 135135 - 1) / 135135
 /-- The named production moduli are exactly the two independently certified primes. -/
 theorem production_prime_certificates :
     productionP1.Prime ∧ productionP2.Prime := by
-  constructor
-  · exact
-      ArkLib.ProximityGap.PrizeShapePrimeP30.prime_P
-  · exact
-      ArkLib.ProximityGap.PrizeShapePrimeP30Second.prime_P
+  exact ⟨ArkLib.ProximityGap.PrizeShapePrimeP30.prime_P,
+    ArkLib.ProximityGap.PrizeShapePrimeP30Second.prime_P⟩
 
 /-- Cauchy--Davenport is in its unsaturated `2n-1` regime at both production primes. -/
 theorem production_cauchyDavenport_windows :

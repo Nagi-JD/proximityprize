@@ -66,12 +66,10 @@ noncomputable def gaussTerm (G : Finset F) (y : ℝ) (r : ℕ) : ℝ :=
 
 theorem summable_dcTerm {ψ : AddChar F ℂ} (hψ : ψ.IsPrimitive) (G : Finset F) (y : ℝ) :
     Summable (dcTerm G y) := by
-  unfold dcTerm
   exact summable_dcMoment hψ G y
 
 set_option linter.unusedSectionVars false in
 theorem summable_gaussTerm (G : Finset F) (y : ℝ) : Summable (gaussTerm G y) := by
-  unfold gaussTerm
   exact summable_gaussianTerms (Fintype.card F : ℝ) (G.card : ℝ) y
 
 set_option linter.unusedSectionVars false in

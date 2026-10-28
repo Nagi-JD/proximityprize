@@ -5,6 +5,7 @@ Authors: ArkLib Contributors
 -/
 import Mathlib.Data.Fintype.CardEmbedding
 import ArkLib.Data.CodingTheory.ProximityGap.LamLeungMultisetAntipodal
+import Mathlib.Data.Fintype.CardEmbedding
 import Mathlib.Tactic
 
 /-!

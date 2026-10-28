@@ -83,11 +83,16 @@ echo "# Native security clients"
   ArkLibTest.Data.Fin \
   ArkLibTest.ToVCVio.EvalDist.ProbabilityBounds \
   ArkLibTest.OracleReduction.ProtocolSpec \
+  ArkLib.OracleReduction.Security.Guarded \
+  ArkLib.OracleReduction.Security.GuardedRoundByRound \
+  ArkLib.OracleReduction.ProtocolSpec.ChallengeSampling \
   ArkLibTest.ProofSystem.RingSwitching.Packing.FiniteObservation \
   ArkLibTest.ProofSystem.RingSwitching.Packing.CheckedObservation \
   ArkLibTest.ProofSystem.RingSwitching.Packing.Polynomial \
   ArkLibTest.ProofSystem.RingSwitching.Packing.Relations \
   ArkLibTest.ProofSystem.RingSwitching.Packing.Batching \
+  ArkLibTest.ProofSystem.RingSwitching.Packing.CandidateList \
+  ArkLibTest.ProofSystem.RingSwitching.Packing.Orientation \
   ArkLibTest.ProofSystem.RingSwitching.Packing.SeparateFields \
   ArkLibTest.ProofSystem.RingSwitching.Packing.Multiplier \
   ArkLibTest.ProofSystem.RingSwitching.Packing.ScalarHead.Layout \
@@ -96,7 +101,10 @@ echo "# Native security clients"
   ArkLib.ProofSystem.RingSwitching.Packing.ProfileLayout \
   ArkLibTest.ProofSystem.Stir.ParamConditions \
   ArkLibTest.ProofSystem.Stir.PaperStatements \
-  ArkLibTest.ProofSystem.Stir.ProximityGap
+  ArkLibTest.ProofSystem.Stir.ProximityGap \
+  ArkLib.ProofSystem.Sumcheck.Interaction.ProtocolSoundness \
+  ArkLib.ProofSystem.Sumcheck.Interaction.RoundByRound \
+  ArkLib.ProofSystem.Sumcheck.Interaction.StateRestorationSoundness
 
 # CI gate 2: zero live sorry/admit holes in both library and research source.
 echo ""

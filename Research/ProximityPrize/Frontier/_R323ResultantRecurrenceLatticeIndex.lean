@@ -169,7 +169,7 @@ theorem norm_toQ (k : ℕ) (t : AdjoinRoot (fpoly (2 ^ k))) :
   have hdet := RingHom.map_det (Int.castRingHom ℚ)
     (Algebra.leftMulMatrix
       ((AdjoinRoot.powerBasis' (fz_monic k)).basis.reindex (finCongr (deg_eq k)).symm) t)
-  simpa [RingHom.mapMatrix_apply] using hdet
+  exact hdet
 
 /-! ## §3  Norm over ℚ = product over the roots -/
 

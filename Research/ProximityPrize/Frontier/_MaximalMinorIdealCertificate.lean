@@ -57,7 +57,8 @@ theorem eval₂Hom_symbolicVandermonde
     (coeff : F →+* E) (label : J → E) :
     MvPolynomial.eval₂Hom coeff label (symbolicVandermonde (F := F) (J := J)) =
       vandermondeProduct label := by
-  simp [symbolicVandermonde, vandermondeProduct]
+  simp only [symbolicVandermonde, vandermondeProduct, map_prod, map_sub,
+    MvPolynomial.eval₂Hom_X']
 
 /-- A Bézout identity for a power of `delta` forces at least one generator to remain nonzero
 under every specialization where `delta` remains nonzero. -/

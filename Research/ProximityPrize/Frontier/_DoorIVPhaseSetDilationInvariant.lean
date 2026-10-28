@@ -813,7 +813,7 @@ attaining the maximum. -/
 theorem addKSumMaxFiber_smul_eq {k : ℕ} (S : Finset F) {lam : F} (hlam : lam ≠ 0) :
     addKSumMaxFiber (k := k) (S.image (fun x => lam * x)) = addKSumMaxFiber (k := k) S := by
   classical
-  simp only [addKSumMaxFiber, addKSumFiberCounts_smul_eq (k := k) S hlam]
+  simp only [addKSumMaxFiber, addKSumFiberCounts_smul_eq S hlam]
 
 /-- Two nonzero frequency dilates have the same higher-order `L^{2k}` small-ball multiplicity.  A
 higher-order Halász max-fiber anti-concentration attempt is therefore exactly `b`-blind at every
