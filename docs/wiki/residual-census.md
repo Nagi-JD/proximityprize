@@ -6,8 +6,11 @@ The strict census counts declarations under `ArkLib/` of the form
 `def ...Residual ... : Prop`. A residual is **discharged** only when a concrete
 provider has no residual dependencies, no extra proof-like explicit binders, and no
 ambiguous namespace match. Conditional reductions are useful proof plumbing, but they
-remain **open** until their side conditions are proved. A residual is **refuted** when
-the tree contains a concrete theorem of a negated residual instance.
+remain **open** until their side conditions are proved. An equivalence (`R ↔ Q`), a
+result whose first top-level connective after the residual is `→`, `∨` or `=`, or an
+instance with a parameter fixed to a numeral (`R (k := 0)`) is not a provider. A residual
+is **refuted** when the tree contains a concrete theorem of a negated residual instance,
+and a proved negation outranks any apparent provider.
 
 The named-residual convention is a modularity pattern, not an incompleteness marker:
 always check this census before treating a `*Residual` name as open proof debt.
@@ -45,17 +48,17 @@ always check this census before treating a `*Residual` name as open proof debt.
 ## Summary
 
 - **Total strict residuals:** 89
-- **Open:** 44
-- **Discharged:** 44
-- **Refuted:** 1
+- **Open:** 49
+- **Discharged:** 35
+- **Refuted:** 5
 - **Residual-like near misses:** 33 (listed below and in `scripts/residual_census.json`)
 
 | top-level directory | total | open | discharged | refuted |
 |---|---:|---:|---:|---:|
 | `(root)` | 1 | 0 | 1 | 0 |
-| `Data` | 24 | 16 | 8 | 0 |
+| `Data` | 24 | 17 | 3 | 4 |
 | `OracleReduction` | 39 | 22 | 17 | 0 |
-| `ProofSystem` | 14 | 6 | 8 | 0 |
+| `ProofSystem` | 14 | 10 | 4 | 0 |
 | `ToMathlib` | 11 | 0 | 10 | 1 |
 
 ## Open Residuals
@@ -66,6 +69,7 @@ always check this census before treating a `*Residual` name as open proof debt.
 - `AGL24.SymbolicFullRankResidual` — `ArkLib/Data/CodingTheory/AGL24SymbolicRank.lean:45` — conditional providers only (residual deps: `FrankOrientationResidual`, `GMMDSResidual`, `SymbolicFullRankResidual`; extra assumptions: `h'`, `hdual`, `hfield`, `hfrank`, `hgm`, `hgmmds`, `hk`, `hminor`, `hnonempty`, `hrc`, `hwitness`)
 - `AGL24.RIMFullRankFailureProbResidual` — `ArkLib/Data/CodingTheory/AGL24UnionBound.lean:88` — conditional providers only (residual deps: `SymbolicFullRankResidual`; extra assumptions: `hfrank`, `hgm`, `hnonempty`, `hsym`, `ht`, `hwpc`)
 - `CodingTheory.randomLinearLambdaLowerFirstMomentResidual` — `ArkLib/Data/CodingTheory/ListDecoding/Bounds/RandomAndReedSolomon.lean:142` — conditional providers only (extra assumptions: `h`, `hG`)
+- `ProximityGap.StrictCoeffPolysResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/Curves.lean:2505` — conditional providers only (residual deps: `CurveCommonAgreementResidual`, `StrictCanonicalCoeffPolysResidual`, `StrictCoeffPolysExcResidual`, `StrictCoeffPolysLargeResidual`; extra assumptions: `h`, `hCanonical`, `hInput`, `hLarge`, `hdeg`, `hq`, `hδ`)
 - `ProximityGap.StrictCanonicalCoeffPolysResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/Curves.lean:2528`
 - `ProximityGap.CurveCommonAgreementResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/Curves/CoeffExtractionResidual.lean:37` — conditional providers only (extra assumptions: `h`, `hdeg`, `hq`, `hδ`)
 - `ProximityGap.RSCurveListSizeResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/Curves/ListSizeResidual.lean:45`
@@ -76,19 +80,19 @@ always check this census before treating a `*Residual` name as open proof debt.
 - `ProximityGap.StrictCoeffPolysExcResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/StrictCoeffPolysExceptional.lean:157` — conditional providers only (residual deps: `StrictCoeffPolysExcResidual`, `StrictCoeffPolysResidual`; extra assumptions: `h`, `hbb`)
 - `ArkLib.BoundaryLatticeThresholdLeaf.BoundaryCardLatticeThresholdResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BoundaryLatticeThresholdLeaf.lean:196` — conditional providers only (extra assumptions: `hCanon`, `hExt`, `hProd`)
 - `ProximityGap.Ownership.SubJohnsonListResidual` — `ArkLib/Data/CodingTheory/ProximityGap/SubJohnsonListSupply.lean:76`
-- `Reduction.reductionAppendCompletenessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:844` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `himplNF`, `himplSP`, `himplVB`, `hn`)
-- `Reduction.reductionAppendPerfectCompletenessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:863` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hImplSupp`, `hInit`, `himplNF`, `himplSP`, `hn`)
-- `Verifier.appendSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:900` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `himplNF`, `himplSP`, `himplVB`, `hn`)
-- `Verifier.appendKnowledgeSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:927`
-- `Verifier.appendRbrSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:951` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `hInitNF`, `hNE`, `hVerify`, `hn`, `hso`)
-- `Verifier.appendRbrKnowledgeSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:990` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `hInitNF`, `hNEW₂`, `hNE₂`, `hVerify`, `hn`, `hso`)
-- `OracleReduction.appendCompletenessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1038` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `himplNF`, `himplSP`, `himplVB`, `hn`)
-- `OracleReduction.appendPerfectCompletenessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1059` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hImplSupp`, `hInit`, `himplNF`, `himplSP`, `hn`)
-- `OracleVerifier.appendSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1085` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hPlainAppend`, `himplNF`, `himplSP`, `himplVB`, `hn`)
-- `OracleVerifier.appendKnowledgeSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1105` — conditional providers only (residual deps: `appendKnowledgeSoundnessResidual`; extra assumptions: `hPlain`)
-- `OracleVerifier.appendRbrSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1126` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `hInitNF`, `hNE₂`, `hVerify`, `hn`)
-- `OracleVerifier.appendRbrKnowledgeSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1148` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `hInitNF`, `hNEW₂`, `hNE₂`, `hVerify`, `hn`)
-- `Verifier.appendRbrSoundnessPhase2Residual` — `ArkLib/OracleReduction/Composition/Sequential/AppendRbrKeystone.lean:282` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInitNF`, `hS₂`, `hn`)
+- `Reduction.reductionAppendCompletenessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:859` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `himplNF`, `himplSP`, `himplVB`, `hn`)
+- `Reduction.reductionAppendPerfectCompletenessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:878` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hImplSupp`, `hInit`, `himplNF`, `himplSP`, `hn`)
+- `Verifier.appendSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:915` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `himplNF`, `himplSP`, `himplVB`, `hn`)
+- `Verifier.appendKnowledgeSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:942`
+- `Verifier.appendRbrSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:966` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `hInitNF`, `hNE`, `hVerify`, `hn`, `hso`)
+- `Verifier.appendRbrKnowledgeSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1005` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `hInitNF`, `hNEW₂`, `hNE₂`, `hVerify`, `hn`, `hso`)
+- `OracleReduction.appendCompletenessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1053` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `himplNF`, `himplSP`, `himplVB`, `hn`)
+- `OracleReduction.appendPerfectCompletenessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1074` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hImplSupp`, `hInit`, `himplNF`, `himplSP`, `hn`)
+- `OracleVerifier.appendSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1100` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hPlainAppend`, `himplNF`, `himplSP`, `himplVB`, `hn`)
+- `OracleVerifier.appendKnowledgeSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1120` — conditional providers only (residual deps: `appendKnowledgeSoundnessResidual`; extra assumptions: `hPlain`)
+- `OracleVerifier.appendRbrSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1141` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `hInitNF`, `hNE₂`, `hVerify`, `hn`)
+- `OracleVerifier.appendRbrKnowledgeSoundnessResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:1163` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInit`, `hInitNF`, `hNEW₂`, `hNE₂`, `hVerify`, `hn`)
+- `Verifier.appendRbrSoundnessPhase2Residual` — `ArkLib/OracleReduction/Composition/Sequential/AppendRbrKeystone.lean:287` — conditional providers only (extra assumptions: `hDir`, `hDir₂`, `hInitNF`, `hS₂`, `hn`)
 - `Verifier.appendRbrKnowledgeSoundnessPerRoundResidual` — `ArkLib/OracleReduction/Composition/Sequential/AppendRbrKnowledgeSoundness.lean:54` — conditional providers only (residual deps: `appendRbrKnowledgeSoundnessPhase2Residual`; extra assumptions: `hBound₁`, `hBound₂`, `hDir`, `hDir₂`, `hInitNF`, `hNEW₂`, `hNE₂`, `hPhase2`, `hn`)
 - `Verifier.appendRbrKnowledgeSoundnessPhase2Residual` — `ArkLib/OracleReduction/Composition/Sequential/AppendRbrKnowledgeSoundness.lean:336` — conditional providers only (extra assumptions: `hBound₂`, `hDir`, `hDir₂`, `hInitNF`, `hNEW₂`, `hReconcile`, `hReconcilePos`, `hn`)
 - `DuplexSpongeFS.KeyLemmaResidual` — `ArkLib/OracleReduction/FiatShamir/DuplexSponge/Security/KeyLemma.lean:245`
@@ -98,12 +102,16 @@ always check this census before treating a `*Residual` name as open proof debt.
 - `DuplexSpongeFS.KeyLemmaHybrids.Hyb23StepResidual` — `ArkLib/OracleReduction/FiatShamir/DuplexSponge/Security/KeyLemmaHybrids.lean:754`
 - `DuplexSpongeFS.KeyLemmaHybrids.Hyb34StepResidual` — `ArkLib/OracleReduction/FiatShamir/DuplexSponge/Security/KeyLemmaHybrids.lean:773` — conditional providers only (extra assumptions: `hA`, `hB`, `hsum`)
 - `DuplexSpongeFS.KeyLemmaSalted.KeyLemmaEagerSaltedResidual` — `ArkLib/OracleReduction/FiatShamir/DuplexSponge/Security/KeyLemmaSalted.lean:714` — conditional providers only (extra assumptions: `h01`, `h12`, `h23`, `h34`)
+- `Logup.SubPhaseCompletenessResidual` — `ArkLib/ProofSystem/Logup/Security/Completeness.lean:237` — conditional providers only (extra assumptions: `hImplSupp`, `hInit`, `hSum`)
+- `Logup.SubPhaseSoundnessResidual` — `ArkLib/ProofSystem/Logup/Security/Soundness.lean:118` — conditional providers only (extra assumptions: `himplNF`, `himplSP`, `himplVB`, `hn`, `hnK`, `hpole`)
 - `Logup.OuterSoundnessResidual` — `ArkLib/ProofSystem/Logup/Security/SubPhaseSplit.lean:70` — conditional providers only (extra assumptions: `himplNF`, `himplSP`, `himplVB`, `hnK`, `hpole`)
 - `Logup.SumcheckSoundnessResidual` — `ArkLib/ProofSystem/Logup/Security/SubPhaseSplit.lean:78` — conditional providers only (extra assumptions: `hError`, `hInnerRbr`, `hMarginal`, `hProj`, `hRbrToSound`, `himplNF`, `himplSP`, `himplVB`, `hn`)
 - `Logup.AppendSoundnessResidual` — `ArkLib/ProofSystem/Logup/Security/SubPhaseSplit.lean:108` — conditional providers only (extra assumptions: `himplNF`, `himplSP`, `himplVB`, `hn`, `hnK`, `hpole`)
+- `Logup.LogupSoundnessBrickResidual` — `ArkLib/ProofSystem/Logup/Security/SubPhaseSplit.lean:115` — conditional providers only (extra assumptions: `himplNF`, `himplSP`, `himplVB`, `hn`, `hnK`, `hpole`)
 - `Logup.OuterCompletenessResidual` — `ArkLib/ProofSystem/Logup/Security/SubPhaseSplit.lean:163` — conditional providers only (extra assumptions: `hInit`)
 - `Logup.SumcheckCompletenessResidual` — `ArkLib/ProofSystem/Logup/Security/SubPhaseSplit.lean:169` — conditional providers only (extra assumptions: `hImplSupp`, `hInit`, `hInner`, `hPerRound`, `hProj`)
 - `Logup.AppendCompletenessResidual` — `ArkLib/ProofSystem/Logup/Security/SubPhaseSplit.lean:183` — conditional providers only (residual deps: `OuterCompletenessResidual`, `SumcheckCompletenessResidual`, `appendToReductionResidual`; extra assumptions: `hBridge`, `hDir`, `hDir₂`, `hImplSupp`, `hInit`, `himplNF`, `himplSP`, `himplVB`, `hn`)
+- `Logup.LogupCompletenessBrickResidual` — `ArkLib/ProofSystem/Logup/Security/SubPhaseSplit.lean:206` — conditional providers only (extra assumptions: `hImplSupp`, `hInit`, `himplNF`, `himplSP`, `himplVB`, `hn`)
 
 ## Residual-Like Near Misses
 
@@ -112,11 +120,11 @@ strict `def ...Residual ... : Prop` census convention. They are not counted in t
 strict open/discharged/refuted totals, but they are still audit surfaces for hidden
 proof debt and naming drift.
 
-- `ProximityToRS.ahiv17_affineLine_correlatedAgreement_residual` — `ArkLib/Data/CodingTheory/ProximityGap/AHIV22.lean:1482` — `def`; name does not end in `Residual`
-- `ProximityToRS.ahiv17_rowSpan_to_affineLine_dOverQ_residual` — `ArkLib/Data/CodingTheory/ProximityGap/AHIV22.lean:1532` — `def`; name does not end in `Residual`
+- `ProximityToRS.ahiv17_affineLine_correlatedAgreement_residual` — `ArkLib/Data/CodingTheory/ProximityGap/AHIV22.lean:1502` — `def`; name does not end in `Residual`
+- `ProximityToRS.ahiv17_rowSpan_to_affineLine_dOverQ_residual` — `ArkLib/Data/CodingTheory/ProximityGap/AHIV22.lean:1552` — `def`; name does not end in `Residual`
 - `ArkLib.Issue64Boundary.BoundaryCardLatticeSubResiduals` — `ArkLib/Data/CodingTheory/ProximityGap/BoundaryCardLatticeSlice.lean:131` — `def`; name does not end in `Residual`
 - `ArkLib.BoundaryCardResidual.BoundaryCardQuantizationResiduals` — `ArkLib/Data/CodingTheory/ProximityGap/BoundaryCardResidual.lean:417` — `def`; name does not end in `Residual`
-- `ProximityGap.diffStackMCAResidualBelowUDR` — `ArkLib/Data/CodingTheory/ProximityGap/Errors.lean:1597` — `def`; name does not end in `Residual`
+- `ProximityGap.diffStackMCAResidualBelowUDR` — `ArkLib/Data/CodingTheory/ProximityGap/Errors.lean:1601` — `def`; name does not end in `Residual`
 - `ProximityGap.Ownership.residual` — `ArkLib/Data/CodingTheory/ProximityGap/OwnershipBound.lean:48` — `def`; name does not end in `Residual`
 - `ProximityGap.WBPencil.w2Residual` — `ArkLib/Data/CodingTheory/ProximityGap/W2WindowHalfCount.lean:43` — `def`; result type is `F[X]`, not `Prop`
 - `DuplexSpongeFS.Sponge316.Lemma5_12HonestResidualPaper` — `ArkLib/OracleReduction/FiatShamir/DuplexSponge/Security/HonestConsistencyPaper.lean:658` — `def`; name does not end in `Residual`
@@ -148,21 +156,20 @@ proof debt and naming drift.
 
 ## Refuted Residuals
 
+- `ProximityGap.BoundaryCardResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/Curves.lean:2578` — refuted by `ArkLib.BoundaryCardResidualAffineLineRefutation.not_boundaryCardResidual_affineLine` (ArkLib/Data/CodingTheory/ProximityGap/BoundaryCardResidualAffineLineRefutation.lean:121), `ArkLib.BoundaryCardResidualRefutation.not_boundaryCardResidual` (ArkLib/Data/CodingTheory/ProximityGap/BoundaryCardResidualRefutation.lean:246), `ArkLib.BoundaryCardStrictInteriorRefutation.not_boundaryCardResidual_nonSquareEndpoint` (ArkLib/Data/CodingTheory/ProximityGap/BoundaryCardStrictInteriorRefutation.lean:314)
+- `ProximityGap.BoundaryProbabilityResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/Curves.lean:2597` — refuted by `ArkLib.BoundaryCardResidualRefutation.not_boundaryProbabilityResidual` (ArkLib/Data/CodingTheory/ProximityGap/BoundaryCardResidualRefutation.lean:274)
+- `BCIKS20.HenselNumerator.FaaDiBrunoSuccSumZeroResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/HenselNumerator.lean:2510` — refuted by `BCIKS20.HenselNumerator.Witness.faaDiBrunoSuccSumZeroResidual_false` (ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/P2OrderZeroRefutationWitness.lean:168)
+- `ArkLib.BoundaryCardResidual.BoundaryCardLatticeResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BoundaryCardResidual.lean:271` — refuted by `ArkLib.BoundaryCardResidualRefutation.not_boundaryCardLatticeResidual` (ArkLib/Data/CodingTheory/ProximityGap/BoundaryCardResidualRefutation.lean:252)
 - `CodingTheory.CS25.DeepHole.DeepHoleProbResidual` — `ArkLib/ToMathlib/CS25DeepHoleFinish.lean:265` — refuted by `CodingTheory.CS25.DeepHole.not_deepHoleProbResidual_negativeEpsilon_zmod2` (ArkLib/ToMathlib/CS25DeepHoleFinish.lean:286)
 
 ## Discharged Residuals
 
 - `ProximityGap.GKL24FirstMomentResidual` — `ArkLib/Data/CodingTheory/Connections/GKL24FirstMoment.lean:1046`
 - `ProximityGap.GKL24FirstMomentWitnessCoverResidual` — `ArkLib/Data/CodingTheory/Connections/GKL24FirstMoment.lean:1107`
-- `ProximityGap.StrictCoeffPolysResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/Curves.lean:2505`
-- `ProximityGap.BoundaryCardResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/Curves.lean:2578`
-- `ProximityGap.BoundaryProbabilityResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/Curves.lean:2597`
-- `BCIKS20.HenselNumerator.FaaDiBrunoSuccSumZeroResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BCIKS20/HenselNumerator.lean:2510`
-- `ArkLib.BoundaryCardResidual.BoundaryCardLatticeResidual` — `ArkLib/Data/CodingTheory/ProximityGap/BoundaryCardResidual.lean:271`
 - `ProximityGap.Ownership.SubJohnsonSupplyResidual` — `ArkLib/Data/CodingTheory/ProximityGap/JohnsonSplitSupply.lean:258`
-- `Prover.appendRunRightResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:3933`
+- `Prover.appendRunRightResidual` — `ArkLib/OracleReduction/Composition/Sequential/Append.lean:3872`
 - `OracleReduction.appendToReductionResidual` — `ArkLib/OracleReduction/Composition/Sequential/AppendPerfectCompletenessOracle.lean:67`
-- `Prover.appendRunRightDistResidual` — `ArkLib/OracleReduction/Composition/Sequential/AppendRun.lean:65`
+- `Prover.appendRunRightDistResidual` — `ArkLib/OracleReduction/Composition/Sequential/AppendRun.lean:70`
 - `Reduction.fiatShamir_runCollapseResidual` — `ArkLib/OracleReduction/FiatShamir/Basic.lean:303`
 - `Reduction.fiatShamir_soundnessTransferResidual` — `ArkLib/OracleReduction/FiatShamir/Basic.lean:893`
 - `Reduction.fiatShamir_knowledgeSoundnessTransferResidual` — `ArkLib/OracleReduction/FiatShamir/Basic.lean:1002`
@@ -177,14 +184,10 @@ proof debt and naming drift.
 - `DuplexSpongeFS.KeyLemmaFoundations.SimulatedProverSharedBudgetResidual` — `ArkLib/OracleReduction/FiatShamir/DuplexSponge/Security/KeyLemmaFoundations.lean:951`
 - `DuplexSpongeFS.KeyLemmaFoundations.D2sQueryStepGSpecBudgetResidual` — `ArkLib/OracleReduction/FiatShamir/DuplexSponge/Security/KeyLemmaFoundations.lean:1011`
 - `DuplexSpongeFS.KeyLemmaFoundations.D2fOuterImplSharedBudgetResidual` — `ArkLib/OracleReduction/FiatShamir/DuplexSponge/Security/KeyLemmaFoundations.lean:1027`
-- `Logup.SubPhaseCompletenessResidual` — `ArkLib/ProofSystem/Logup/Security/Completeness.lean:237`
 - `Logup.OuterCompletenessRunResidual` — `ArkLib/ProofSystem/Logup/Security/OuterCompleteness.lean:139`
 - `Logup.OuterCompletenessRunFactsResidual` — `ArkLib/ProofSystem/Logup/Security/OuterCompleteness.lean:149`
-- `Logup.SubPhaseSoundnessResidual` — `ArkLib/ProofSystem/Logup/Security/Soundness.lean:118`
-- `Logup.LogupSoundnessBrickResidual` — `ArkLib/ProofSystem/Logup/Security/SubPhaseSplit.lean:115`
-- `Logup.LogupCompletenessBrickResidual` — `ArkLib/ProofSystem/Logup/Security/SubPhaseSplit.lean:206`
-- `StirIOP.MultiRound.stirCheckingRbrSoundnessResidual` — `ArkLib/ProofSystem/Stir/CheckingVerifier.lean:964`
-- `StirIOP.MultiRound.stirMultiRoundRbrSoundnessResidual` — `ArkLib/ProofSystem/Stir/MultiRoundAssembly.lean:224`
+- `StirIOP.MultiRound.stirCheckingRbrSoundnessResidual` — `ArkLib/ProofSystem/Stir/CheckingVerifier.lean:969`
+- `StirIOP.MultiRound.stirMultiRoundRbrSoundnessResidual` — `ArkLib/ProofSystem/Stir/MultiRoundAssembly.lean:223`
 - `RingSwitchingKStateResidual` — `ArkLib/ResidualAxioms.lean:27`
 - `Fri.Spec.Completeness.foldRoundPerfectCompletenessResidual` — `ArkLib/ToMathlib/FriComplete.lean:106`
 - `Fri.Spec.Completeness.finalFoldRoundPerfectCompletenessResidual` — `ArkLib/ToMathlib/FriComplete.lean:131`
