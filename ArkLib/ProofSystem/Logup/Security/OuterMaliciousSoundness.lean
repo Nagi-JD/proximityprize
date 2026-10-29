@@ -13,11 +13,14 @@ open OracleComp OracleSpec ProtocolSpec
 open scoped BigOperators NNReal ENNReal
 
 /-!
-# Outer malicious soundness: readback, transcript claim, and the claim-based state function
+# Logup facts and conditional protocol interfaces
 
-The run-level wiring of `hOuter@midLanguage` (design: issue #13 comment `4668149886`):
-full verifier readback (with the pole guard), the transcript claim, acceptance ⟺ claim-vanishing,
-and the complete claim-based RBR `StateFunction` whose `toFun_full` is proven. Axiom-clean.
+The old input-only sumcheck rejection, zero-error closure, and dependent unconditional soundness
+capstones were retired during canonical message-polynomial integration. This module retains its
+independent outer-phase mathematics and explicit conditional protocol interfaces. It does not
+claim the retired embedded-sumcheck soundness completion. Exact former commands and the checked
+finite regression are recorded in
+`scripts/integration/sumcheck-message-semantics-retirements.json`.
 -/
 
 namespace Logup
@@ -577,25 +580,6 @@ theorem outerVerifier_soundness_mid
       | gcongr
   exact Verifier.soundness.mono_error init impl h hle
 
-/-- **Issue #13 LogUp soundness — END-TO-END.** The full LogUp verifier is sound with the
-paper error, with every protocol obligation discharged; only standard runtime side
-conditions on the shared-oracle implementation remain as hypotheses. -/
-theorem logup_soundness_end_to_end [oSpec.Fintype] [oSpec.Inhabited]
-    (sumcheckSoundnessError : ℝ≥0) (hn : 0 < n)
-    (hpole : 2 ^ n < Fintype.card F) (hnK : n ≤ params.numGroups)
-    (himplSP : ∀ (t : oSpec.Domain) (s : σ) (x : oSpec.Range t × σ),
-      x ∈ support ((impl t).run s) → x.2 = s)
-    (himplNF : ∀ (t : oSpec.Domain) (s : σ), Pr[⊥ | (impl t).run s] = 0)
-    (himplVB : ∀ (t : oSpec.Domain) (s s' : σ),
-      evalDist ((impl t).run' s) = evalDist ((impl t).run' s')) :
-    (logupVerifier oSpec F n M params).soundness init impl
-      (inputRelation F n M).language outputRelation.language
-      (logupSoundnessError F n M params sumcheckSoundnessError) :=
-  logup_soundness_pointwiseSumcheck oSpec F n M params sumcheckSoundnessError hn
-    (outerVerifier_soundness_mid oSpec F n M params init impl hpole hnK
-      himplSP himplNF himplVB)
-    himplSP himplNF himplVB
-
 end MidCapstone
 
 
@@ -610,4 +594,3 @@ end Logup
 #print axioms Logup.outerVerifier_rbrSoundness_mid
 #print axioms Logup.sum_outerMidRbrError
 #print axioms Logup.outerVerifier_soundness_mid
-#print axioms Logup.logup_soundness_end_to_end

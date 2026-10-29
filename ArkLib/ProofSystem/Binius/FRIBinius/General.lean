@@ -4,10 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Chung Thai Nguyen, Quang Dao
 -/
 
-import ArkLib.ProofSystem.Binius.BinaryBasefold.QueryPhase
+import ProximityPrize.Extensions.ProofSystem.Binius.BinaryBasefold.QueryPhase
 import ArkLib.ProofSystem.Binius.FRIBinius.CoreInteractionPhase
 import ArkLib.ProofSystem.RingSwitching.BatchingPhase
-import ArkLib.OracleReduction.Security.Basic
+import ProximityPrize.Extensions.OracleReduction.Security.Basic
 import ArkLib.OracleReduction.Security.Implications
 import ArkLib.OracleReduction.Composition.Sequential.AppendOracleAdapters
 import ArkLib.OracleReduction.Composition.Sequential.KnowledgeFailure
@@ -95,22 +95,6 @@ instance : ∀ j, SampleableType ((fullPspec κ L K β ℓ' 𝓡 ϑ γ_repetitio
     (pSpec₂ := BinaryBasefold.pSpecQuery K β γ_repetitions (h_ℓ_add_R_rate := h_ℓ_add_R_rate))
 
 
-local instance batchingVerifier_appendCoherent :
-    OracleVerifier.Append.AppendCoherent
-      (BatchingPhase.oracleVerifier κ L K (ringSwitchingProfile κ L K β) ℓ ℓ' h_l
-        (aOStmtIn := BinaryBasefoldAbstractOStmtIn κ L K β ℓ' 𝓡 ϑ h_ℓ_add_R_rate)) :=
-  BatchingPhase.instOracleVerifierAppendCoherent κ L K
-    (ringSwitchingProfile κ L K β) ℓ ℓ' h_l
-    (aOStmtIn := BinaryBasefoldAbstractOStmtIn κ L K β ℓ' 𝓡 ϑ h_ℓ_add_R_rate)
-
-local instance batchingReduction_appendCoherent :
-    OracleVerifier.Append.AppendCoherent
-      (BatchingPhase.batchingOracleReduction κ L K (ringSwitchingProfile κ L K β) ℓ ℓ' h_l
-        (aOStmtIn := BinaryBasefoldAbstractOStmtIn κ L K β ℓ' 𝓡 ϑ h_ℓ_add_R_rate)).verifier :=
-  BatchingPhase.instBatchingOracleReductionAppendCoherent κ L K
-    (ringSwitchingProfile κ L K β) ℓ ℓ' h_l
-    (aOStmtIn := BinaryBasefoldAbstractOStmtIn κ L K β ℓ' 𝓡 ϑ h_ℓ_add_R_rate)
-
 def batchingCoreVerifier :=
   letI := batchingVerifier_appendCoherent κ L K β ℓ ℓ' 𝓡 ϑ h_ℓ_add_R_rate h_l
   OracleVerifier.append (oSpec:=[]ₒ)
@@ -147,20 +131,6 @@ def batchingCoreReduction :=
       (h_ℓ_add_R_rate := h_ℓ_add_R_rate) ϑ (Fin.last ℓ'))
     (R₂ := FRIBinius.CoreInteractionPhase.coreInteractionOracleReduction κ L K
       β ℓ ℓ' 𝓡 ϑ h_ℓ_add_R_rate h_l (𝓑 := 𝓑))
-
-/-- Batching and core verification preserve all retained oracle interfaces. -/
-instance batchingCoreVerifier_appendCoherent :
-    OracleVerifier.Append.AppendCoherent
-      (batchingCoreVerifier κ L K β ℓ ℓ' 𝓡 ϑ h_ℓ_add_R_rate h_l (𝓑 := 𝓑)) := by
-  unfold batchingCoreVerifier
-  infer_instance
-
-/-- The batching/core reduction inherits its component coherence proofs. -/
-instance batchingCoreReduction_appendCoherent :
-    OracleVerifier.Append.AppendCoherent
-      (batchingCoreReduction κ L K β ℓ ℓ' 𝓡 ϑ h_ℓ_add_R_rate h_l (𝓑 := 𝓑)).verifier := by
-  unfold batchingCoreReduction
-  infer_instance
 
 /-- The oracle verifier for the full Binary Basefold protocol -/
 @[reducible]

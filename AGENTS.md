@@ -17,6 +17,23 @@ on a remote name or GitHub's inferred fork parent. Historical references to
 "upstream", upstream carve-outs, or ArkLib contribution plans do not authorize
 submitting changes there. Upstream sources may be read for comparison only.
 
+## Canonical ArkLib and downstream extensions
+
+ArkLib's upstream implementations, module system, toolchain and dependency pins are the
+authoritative library foundation. The pinned source inventory and the downstream extension
+boundary are documented in [`docs/wiki/upstream-integration.md`](docs/wiki/upstream-integration.md).
+Do not restore an older downstream implementation over a canonical module to fix an importer.
+Port the caller or add a compatibility theorem in the extension layer instead.
+Preserve the upstream merge parent when publishing an integration: use a merge commit for
+the downstream PR, and verify the pinned upstream revision is an ancestor of downstream `main`.
+Do not squash or rebase an upstream integration.
+
+Canonical ArkLib files use `module`, `public import`, and `@[expose] public section`.
+Their generated umbrella re-exports the complete canonical library. The classic downstream
+extension and Research libraries have separate Lake ownership and validation; they must not
+be imported by canonical ArkLib modules. Preserve the downstream contribution licensing and
+the source of inherited upstream admissions when integrating another snapshot.
+
 ## Fast Start
 
 1. For a convenient routine check, start with `./scripts/validate.sh`.

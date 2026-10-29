@@ -6,6 +6,7 @@ Authors: ArkLib Contributors
 
 import Mathlib.Algebra.Field.ZMod
 import ArkLib.Data.CodingTheory.ProximityGap.BoundaryCardResidual
+import ProximityPrize.Compatibility.UniformProbability
 
 /-!
 # The lattice leaf of the corrected boundary route: quantitative threshold + §5 extraction
@@ -30,8 +31,9 @@ the **single** §5 coefficient-polynomial extraction residual:
 
 * `jointAgreement_of_latticeThreshold_of_coeffPolys` — per stack: quantitative threshold +
   extraction ⟹ `jointAgreement`, at every radius `δ` (in particular the exact lattice endpoint).
-* `LatticeCoeffPolyExtraction` — the extraction-only residual surface (the genuine open core:
-  BCIKS20 §5 list-decoding at the endpoint).
+* `LatticeCoeffPolyExtraction` — the extraction-only residual surface (BCIKS20 §5 list-decoding
+  at the endpoint).  Its *unconditional* form is refuted at small parameters (see below), so the
+  surviving frontier is a regime-restricted version, not this Prop as stated.
 * `correlatedAgreementCurves_of_latticeExtraction` — consumer shape: the extraction supply alone
   yields `δ_ε_correlatedAgreementCurves` with `ε = (n+1)/|F|`.
 * `BoundaryCardLatticeThresholdResidual` + `boundaryCardLatticeThresholdResidual_of_extraction`
@@ -39,13 +41,17 @@ the **single** §5 coefficient-polynomial extraction residual:
   `BoundaryCardLatticeResidual` with the quantitative threshold in place of nonemptiness), and
   its reduction to extraction only.
 
-**The extraction hypothesis cannot be dropped.**  The falsify-first probe
-(`scripts/probes/probe_boundary_lattice_threshold.py`, 4 lattice endpoints: `q=11/17, n=8,
-deg=2, k=1`; `q=11, n=9, deg=1, k=1`; `q=29, n=8, deg=2, k=2`) found a stack over
-`GF(11)`, `n=8`, `deg=2`, `k=1` with good-set cardinality `10 > 9 = (n+1)k` and **no**
-`jointAgreement` (the per-z decoding lists admit a choice `P` with no coefficient polynomial
-`B`, exhaustively checked) — so the quantitative threshold *alone* is false as a lattice-leaf
-hypothesis.  The composite (threshold + extraction) survived all 4 points with 0 violations.
+**The extraction hypothesis cannot be dropped.**  This is kernel-checked, not merely probed:
+`ArkLib.BoundaryLatticeThresholdRefutation.not_boundaryCardLatticeThresholdResidual`
+refutes `BoundaryCardLatticeThresholdResidual` at `ZMod 7`, `n = 4`, `deg = 1`, `k = 1`
+(a lattice endpoint, `deg·n = 4 = 2²`, `δ = 1/2`), where the good set has cardinality
+at least `6 > 5 = (n+1)k` (`Pr ≥ 6/7 > 5/7`) while `jointAgreement` fails.  Hence the
+quantitative threshold *alone* is false as a lattice-leaf hypothesis.  The extraction is
+load-bearing, not droppable: the same endpoint refutes the extraction-only surface itself
+(`not_latticeCoeffPolyExtraction`, hence also the canonical-family form
+`not_latticeCanonicalCoeffPolyExtraction`), so the surviving frontier is a regime-restricted
+extraction statement, not the unconditional one — the `ZMod 11` witness below shows that
+restriction is not vacuity.
 
 The witness namespace instantiates the per-stack theorem end-to-end at a genuine lattice
 endpoint (`ZMod 11`, `n = 8`, `deg = 2`, `deg·n = 16 = 4²`, `δ·n = 4` integral): the zero stack
@@ -178,12 +184,13 @@ def LatticeCoeffPolyExtraction {k deg : ℕ} (domain : ι ↪ F) (δ : ℝ≥0) 
 the honest replacement for the refuted nonemptiness export and for the vacuous
 `ε = errorBound (1 − √ρ) = 0`. -/
 theorem correlatedAgreementCurves_of_latticeExtraction {k deg : ℕ} {domain : ι ↪ F}
-    {δ : ℝ≥0} [NeZero deg] (hk : 0 < k)
+    {δ : ℝ≥0} [NeZero deg] [SampleableType F] (hk : 0 < k)
     (hExt : LatticeCoeffPolyExtraction (k := k) (deg := deg) (domain := domain) δ) :
     δ_ε_correlatedAgreementCurves (k := k) (A := F) (F := F) (ι := ι)
       (C := (ReedSolomon.code domain deg : Set (ι → F))) (δ := δ)
       (ε := latticeThresholdEps ι F) := by
   intro u hprob
+  rw [← ProximityPrize.Compatibility.pmf_uniform_probability_eq_native] at hprob
   exact jointAgreement_of_latticeThreshold_of_coeffPolys hk u hprob
     (hExt u (card_gt_of_prob_gt_latticeThreshold u hprob))
 
@@ -224,9 +231,11 @@ strict-Johnson window hypotheses replaced by the quantitative count threshold
 residual from it via the (radius-generic, proven) canonical-agreement transport
 `coeff_polys_for_all_decoded_of_canonical_agreement`.
 
-This is a reduction layer, not a closure: the canonical Prop is still open (its content is
-BCIKS20 §5 list-decoding at the exact endpoint — same open core as
-`StrictCanonicalCoeffPolysResidual`, with the strict-radius slack no longer available). -/
+This is a reduction layer, not a closure, and the unconditional canonical Prop is *false* at the
+`ZMod 7` endpoint of `BoundaryLatticeThresholdRefutation`
+(`not_latticeCanonicalCoeffPolyExtraction`).  What remains open is the regime-restricted version:
+BCIKS20 §5 list-decoding at the exact endpoint — the same open core as
+`StrictCanonicalCoeffPolysResidual`, with the strict-radius slack no longer available. -/
 
 omit [Nonempty ι] in
 /-- **Canonical-family form of the lattice extraction residual.**  For every stack over the
@@ -274,7 +283,7 @@ theorem boundaryCardLatticeThresholdResidual_of_canonical {k deg : ℕ} {domain 
 /-- Consumer shape from the canonical-family residual: curve correlated agreement with
 `ε = (n+1)/|F|`. -/
 theorem correlatedAgreementCurves_of_latticeCanonical {k deg : ℕ} {domain : ι ↪ F}
-    {δ : ℝ≥0} [NeZero deg] (hk : 0 < k)
+    {δ : ℝ≥0} [NeZero deg] [SampleableType F] (hk : 0 < k)
     (hCanon :
       LatticeCanonicalCoeffPolyExtraction (k := k) (deg := deg) (domain := domain) δ) :
     δ_ε_correlatedAgreementCurves (k := k) (A := F) (F := F) (ι := ι)

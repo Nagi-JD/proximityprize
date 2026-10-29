@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: ArkLib Contributors
 -/
 
-import ArkLib.Data.CodingTheory.ProximityGap.BCIKS20.Curves
+import ProximityPrize.Extensions.Data.CodingTheory.ProximityGap.BCIKS20.Curves
 import Mathlib.LinearAlgebra.Lagrange
 
 /-!
@@ -92,7 +92,14 @@ variable {F : Type} [Field F] [Fintype F] [DecidableEq F]
 /-- `StrictCoeffPolysResidual` restricted to the large-good-set sector
 `k + 1 < (RS_goodCoeffsCurve u δ).card`.  By `strictCoeffPolysResidual_iff_large` this carries
 the *entire* content of the residual: the complementary sector is discharged unconditionally by
-Lagrange interpolation. -/
+Lagrange interpolation.
+
+**REFUTED — this Prop is FALSE as stated** (axiom-clean, in-tree):
+`StrictCanonicalCoeffPolysRefutation.not_strictCoeffPolysLargeResidual`
+(`CanonicalCoeffExtractionRefutation.lean`). The counterexample good-coefficient set has
+`k + 1 = 2 < |S| = 2⁶⁴`, so the failure of `StrictCoeffPolysResidual` already lives in this
+sector; the reduction below transfers the refutation. Retained ONLY as a documented-false
+assumption surface for explicitly-conditional adapters; do not try to discharge it. -/
 def StrictCoeffPolysLargeResidual {k deg : ℕ} {domain : ι ↪ F} {δ : ℝ≥0} : Prop :=
   ∀ (_hk : 0 < k) (u : WordStack F (Fin (k + 1)) ι),
     Pr_{
@@ -146,9 +153,11 @@ theorem strictCoeffPolysResidual_iff_large {k deg : ℕ} {domain : ι ↪ F} {δ
 
 /-- **Keystone front door for the large sector.**  [BCIKS20] Theorem 1.5 (correlated agreement
 for low-degree parameterised curves) from the large-sector strict residual and the boundary
-residual — producers never have to consider good sets of size `≤ k + 1`. -/
+residual — producers never have to consider good sets of size `≤ k + 1`.
+The legacy `hLarge` parameter is retained for compatibility; canonical strict-open soundness
+now supplies that branch, while the closed-boundary residual is still required. -/
 theorem correlatedAgreement_affine_curves_of_largeResidual {k deg : ℕ}
-    {domain : ι ↪ F} {δ : ℝ≥0} [NeZero deg]
+    {domain : ι ↪ F} {δ : ℝ≥0} [NeZero deg] [SampleableType F]
     (hLarge :
       StrictCoeffPolysLargeResidual (k := k) (deg := deg) (domain := domain) (δ := δ))
     (hBoundary :
@@ -156,8 +165,8 @@ theorem correlatedAgreement_affine_curves_of_largeResidual {k deg : ℕ}
     (hδ : δ ≤ 1 - ReedSolomon.sqrtRate deg domain) :
     δ_ε_correlatedAgreementCurves (k := k) (A := F) (F := F) (ι := ι)
       (C := ReedSolomon.code domain deg) (δ := δ) (ε := errorBound δ deg domain) :=
-  correlatedAgreement_affine_curves (k := k) (deg := deg) (domain := domain) (δ := δ)
-    (strictCoeffPolysResidual_of_large hLarge) hBoundary hδ
+  correlatedAgreement_affine_curves_of_boundary_probability
+    (k := k) (deg := deg) (domain := domain) (δ := δ) hδ hBoundary
 
 end Residual
 

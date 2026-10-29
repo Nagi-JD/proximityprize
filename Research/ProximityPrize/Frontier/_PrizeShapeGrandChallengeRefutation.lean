@@ -14,7 +14,7 @@ import ArkLib.Data.CodingTheory.ProximityGap.OpenCoreConverse
 
 The operational good-radius set at rates `1/8` and `1/16` has supremum `1/2`, but
 the endpoint `1/2` is bad at budget `2^-128`.  Consequently it has no largest
-element.  This refutes the real-valued `GrandMCAResolution` / `mcaPrize` predicate
+element.  This refutes the real-valued `GrandMCAResolution` / `continuousMcaPrize` predicate
 for the certified smooth domain.  The faithful lattice threshold is unaffected.
 -/
 
@@ -131,7 +131,7 @@ theorem prizeRateSixteenth_floor :
 /-- **Formal prize verdict.**  The real-valued ABF26 MCA prize predicate is false
 on the first certified smooth domain because its rate-`1/8` good-radius set has no
 largest element. -/
-theorem not_mcaPrize_firstPrimeDomain : ¬ mcaPrize firstPrimeDomain := by
+theorem not_mcaPrize_firstPrimeDomain : ¬ continuousMcaPrize firstPrimeDomain := by
   intro hprize
   have hrate := hprize (⟨3, by norm_num⟩ : Fin 4)
   apply not_grandMCAChallengeRS_rateSixteenth
