@@ -129,7 +129,7 @@
       "reviewed_axiom_anchor_count": 5
     }
   ],
-  "package_validation_pending": true,
+  "package_validation_pending": false,
   "source_revision_before_change": "1d95629b0e4037357f0e37be0697c47349bc29b8",
   "scope": [
     "Research/ProximityPrize/Frontier/_PrizeShapeLowRateExactPins.lean",
@@ -467,5 +467,17 @@
       ],
       "whole_default_package_validation_pending": true
     }
+  },
+  "current_validation": {
+    "status": "package_validation_passed",
+    "receipt": "scripts/integration/final-validation.json",
+    "check": "default_libraries",
+    "source_commit": "7483975d251b3549313243ea9d5ada700af121f9",
+    "source_snapshot_sha256": "409575218737d68505ba7ded658fd0188023555e15010c876856e2cd917350f3",
+    "resolved_package_pending_paths": [
+      "/package_validation_pending"
+    ],
+    "superseded_historical_status_paths": [],
+    "scope": "Current checked-in sources passed the final four-library package build. Original status text and all earlier receipts remain historical snapshots, not current pending claims."
   }
 }

@@ -208,7 +208,7 @@
       "receipt": "/tmp/arklib-G87-prefix-syz66-whole.receipt.json"
     },
     "warning_count": 0,
-    "package_validation_pending": true
+    "package_validation_pending": false
   },
   "resource_diagnostic_honesty": {
     "prior_parent_owned_stop": {
@@ -220,5 +220,17 @@
     "prior_result": "The stopped full23child provided no proof verdict; its termination is inconclusive.",
     "final_check": "Final repository source completes normally below12GiB and90active-compiler seconds.",
     "original_caps_unchanged": "maxRecDepth100000 and maxHeartbeats1000000 are retained exactly; no budget increase or new linter suppression."
+  },
+  "current_validation": {
+    "status": "package_validation_passed",
+    "receipt": "scripts/integration/final-validation.json",
+    "check": "default_libraries",
+    "source_commit": "7483975d251b3549313243ea9d5ada700af121f9",
+    "source_snapshot_sha256": "409575218737d68505ba7ded658fd0188023555e15010c876856e2cd917350f3",
+    "resolved_package_pending_paths": [
+      "/validation/package_validation_pending"
+    ],
+    "superseded_historical_status_paths": [],
+    "scope": "Current checked-in sources passed the final four-library package build. Original status text and all earlier receipts remain historical snapshots, not current pending claims."
   }
 }

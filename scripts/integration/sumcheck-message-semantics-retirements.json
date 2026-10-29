@@ -760,5 +760,20 @@
       }
     ],
     "package_warning_scope": "Full17 package flags additionally report retained style/unused-data-hypothesis diagnostics in these historical modules. The temporary-runner receipts above are clean under its direct-check flags; no whole-project style-clean claim or new linter suppression is made."
+  },
+  "current_validation": {
+    "status": "package_validation_passed",
+    "receipt": "scripts/integration/final-validation.json",
+    "check": "default_libraries",
+    "source_commit": "7483975d251b3549313243ea9d5ada700af121f9",
+    "source_snapshot_sha256": "409575218737d68505ba7ded658fd0188023555e15010c876856e2cd917350f3",
+    "resolved_package_pending_paths": [],
+    "superseded_historical_status_paths": [
+      "/conditional_knowledge_assembly/status",
+      "/generic_conditional_validation/determinism_prefix",
+      "/completed_conditional_sumcheck_assembly/validation",
+      "/generic_plain_sequential_assembly/validation"
+    ],
+    "scope": "Current checked-in sources passed the final four-library package build. Original status text and all earlier receipts remain historical snapshots, not current pending claims."
   }
 }

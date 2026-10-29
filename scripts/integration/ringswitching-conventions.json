@@ -989,5 +989,22 @@
       "original_proof_source": "Preserved in followup_ports.original_named_commands for this owner.",
       "scope": "This does not retire the independent true last-variable polynomial marginal identity RingSwitching.roundPoly_eval_eq_sum_snoc."
     }
+  ],
+  "current_validation": {
+    "status": "package_validation_passed",
+    "receipt": "scripts/integration/final-validation.json",
+    "check": "default_libraries",
+    "source_commit": "7483975d251b3549313243ea9d5ada700af121f9",
+    "source_snapshot_sha256": "409575218737d68505ba7ded658fd0188023555e15010c876856e2cd917350f3",
+    "resolved_package_pending_paths": [],
+    "superseded_historical_status_paths": [],
+    "scope": "Current checked-in sources passed the final four-library package build. Original status text and all earlier receipts remain historical snapshots, not current pending claims."
+  },
+  "hash_scope_notes": [
+    {
+      "field": "/followup_ports/4/current_sha256",
+      "scope": "This preserved hash is the earlier Spec port snapshot, before the later reviewed PEmpty empty-query universe repair. Current package validation covers the final source.",
+      "recorded_hash_owner": "ArkLib/ProofSystem/RingSwitching/Spec.lean"
+    }
   ]
 }

@@ -2101,5 +2101,21 @@
     "scope": "Current-source temporary compiled-import checks are separate from final package validation. The original named residuals and explicit premises remain open where not proved."
   },
   "full21_logup_entry_point_ports": "scripts/integration/full21-logup-native-probability-ports.json",
-  "full22_outer_rbr_native_port": "scripts/integration/full22-logup-outer-rbr-native-port.json"
+  "full22_outer_rbr_native_port": "scripts/integration/full22-logup-outer-rbr-native-port.json",
+  "current_validation": {
+    "status": "package_validation_passed",
+    "receipt": "scripts/integration/final-validation.json",
+    "check": "default_libraries",
+    "source_commit": "7483975d251b3549313243ea9d5ada700af121f9",
+    "source_snapshot_sha256": "409575218737d68505ba7ded658fd0188023555e15010c876856e2cd917350f3",
+    "resolved_package_pending_paths": [],
+    "superseded_historical_status_paths": [
+      "/product_marginal_power_bound/validation/actual_import_boundary",
+      "/stir_repetition_native/status",
+      "/completed_spartan_phase_interfaces/validation",
+      "/spartan_terminal_native_contract/validation",
+      "/logup_outer_completeness_native/validation"
+    ],
+    "scope": "Current checked-in sources passed the final four-library package build. Original status text and all earlier receipts remain historical snapshots, not current pending claims."
+  }
 }
