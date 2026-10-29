@@ -2046,7 +2046,7 @@
      "name": "Logup.outerSoundnessResidual_holds",
      "kind": "theorem",
      "file": "ArkLib/ProofSystem/Logup/Security/LogupResidualDischarge.lean",
-     "line": 42,
+     "line": 47,
      "conditional_on_residuals": [],
      "extra_explicit_binders": [
       "himplNF",
@@ -2073,7 +2073,7 @@
      "name": "Logup.issue13_sumcheckSoundnessResidual_projClosed",
      "kind": "theorem",
      "file": "ArkLib/ProofSystem/Logup/Security/LogupProtocol2Status.lean",
-     "line": 210,
+     "line": 215,
      "conditional_on_residuals": [],
      "extra_explicit_binders": [
       "hError",
@@ -2141,7 +2141,7 @@
      "name": "Logup.sumcheckSoundnessResidual_holds_projClosed",
      "kind": "theorem",
      "file": "ArkLib/ProofSystem/Logup/Security/SumcheckSoundnessProjClosed.lean",
-     "line": 109,
+     "line": 115,
      "conditional_on_residuals": [],
      "extra_explicit_binders": [
       "hError",
@@ -2159,7 +2159,7 @@
      "name": "Logup.sumcheckSoundnessResidual_holds_wired",
      "kind": "theorem",
      "file": "ArkLib/ProofSystem/Logup/Security/SumcheckSoundnessWired.lean",
-     "line": 88,
+     "line": 93,
      "conditional_on_residuals": [],
      "extra_explicit_binders": [
       "hError",
@@ -2376,7 +2376,7 @@
      "name": "Logup.appendCompletenessResidual_wired",
      "kind": "theorem",
      "file": "ArkLib/ProofSystem/Logup/Security/LogupCompletenessWired.lean",
-     "line": 185,
+     "line": 190,
      "conditional_on_residuals": [
       "SumcheckCompletenessResidual"
      ],
@@ -2397,7 +2397,7 @@
      "name": "Logup.appendCompletenessResidual_unconditional",
      "kind": "theorem",
      "file": "ArkLib/ProofSystem/Logup/Security/LogupCompletenessWired.lean",
-     "line": 327,
+     "line": 331,
      "conditional_on_residuals": [],
      "extra_explicit_binders": [
       "himplNF",
@@ -2414,7 +2414,7 @@
      "name": "Logup.appendCompletenessResidual_forall",
      "kind": "theorem",
      "file": "ArkLib/ProofSystem/Logup/Security/LogupCompletenessWired.lean",
-     "line": 349,
+     "line": 353,
      "conditional_on_residuals": [
       "OuterCompletenessResidual",
       "SumcheckCompletenessResidual"
@@ -2445,7 +2445,7 @@
      "name": "Logup.logupCompletenessBrickResidual_holds",
      "kind": "theorem",
      "file": "ArkLib/ProofSystem/Logup/Security/LogupCompletenessWired.lean",
-     "line": 264,
+     "line": 269,
      "conditional_on_residuals": [],
      "extra_explicit_binders": [
       "hImplSupp",

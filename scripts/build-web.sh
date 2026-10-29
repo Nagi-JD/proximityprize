@@ -9,8 +9,8 @@ echo "Building Blueprint Declaration Environment..."
 ./scripts/lake-locked.sh build ArkLibBlueprint
 
 echo "Building Project Documentation..."
-./scripts/lake-locked.sh build ArkLib:docs
-./scripts/lake-locked.sh build ArkLibBlueprint:docs
+./scripts/lake-locked.sh build ArkLib:docs ArkLibExtensions:docs \
+    ResearchProximityPrize:docs ProximityPrizeExtensions:docs ArkLibBlueprint:docs
 
 # Build the Blueprint
 if [ -d "blueprint" ]; then

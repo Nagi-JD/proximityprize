@@ -27,6 +27,11 @@ finite regression are recorded in
 open scoped NNReal ENNReal
 open OracleComp OracleSpec ProtocolSpec
 
+-- Preserve the original whole-value equality observation within this module.
+private local instance (A : Type) : MeasurableSpace A := ⊤
+private local instance (A : Type) : @DiscreteMeasurableSpace A ⊤ :=
+  ⟨fun _ => True.intro⟩
+
 namespace Logup
 
 section Issue13
@@ -52,7 +57,7 @@ The outer completeness half, embedded-sumcheck completeness half, and non-perfec
 append composition are discharged.  In particular this theorem does not consume the historical
 `SubPhaseCompletenessResidual`, `SumcheckCompletenessResidual`, or append-completeness residual
 front doors. -/
-theorem issue13_completeness_final [oSpec.Fintype] [oSpec.Inhabited]
+theorem issue13_completeness_final [∀ q, Fintype (oSpec.Range q)] [∀ q, Inhabited (oSpec.Range q)]
     (hn : 0 < n)
     (hInit : NeverFail init)
     (hImplSupp : ∀ {β} (q : OracleQuery oSpec β) s,
@@ -60,7 +65,7 @@ theorem issue13_completeness_final [oSpec.Fintype] [oSpec.Inhabited]
         = support (liftM q : OracleComp oSpec β))
     (himplSP : ∀ (t : oSpec.Domain) (s : σ) (x : oSpec.Range t × σ),
       x ∈ support ((impl t).run s) → x.2 = s)
-    (himplNF : ∀ (t : oSpec.Domain) (s : σ), Pr[⊥ | (impl t).run s] = 0)
+    (himplNF : ∀ (t : oSpec.Domain) (s : σ), prFail ((impl t).run s) = 0)
     (himplVB : ∀ (t : oSpec.Domain) (s s' : σ),
       evalDist ((impl t).run' s) = evalDist ((impl t).run' s')) :
     (logupOracleReduction oSpec F n M params).completeness init impl
@@ -144,7 +149,7 @@ theorem issue13_soundness_msgSeam (sumcheckSoundnessError : ℝ≥0)
         sumcheckSoundnessError)
     (himplSP : ∀ (t : oSpec.Domain) (s : σ) (x : oSpec.Range t × σ),
       x ∈ support ((impl t).run s) → x.2 = s)
-    (himplNF : ∀ (t : oSpec.Domain) (s : σ), Pr[⊥ | (impl t).run s] = 0)
+    (himplNF : ∀ (t : oSpec.Domain) (s : σ), prFail ((impl t).run s) = 0)
     (himplVB : ∀ (t : oSpec.Domain) (s s' : σ),
       evalDist ((impl t).run' s) = evalDist ((impl t).run' s')) :
     (logupVerifier oSpec F n M params).soundness init impl
@@ -166,7 +171,7 @@ plain soundness fact directly.  Instead it derives that fact from:
 
 Thus the remaining soundness surface is the corrected outer soundness plus the genuinely algebraic /
 inner-RBR ingredients of the embedded sumcheck. -/
-theorem issue13_soundness_msgSeam_wiredSumcheck [oSpec.Fintype]
+theorem issue13_soundness_msgSeam_wiredSumcheck [∀ q, Fintype (oSpec.Range q)]
     (sumcheckSoundnessError : ℝ≥0)
     {rbrSoundnessError : (logupSumcheckPSpec F n M params).ChallengeIdx → ℝ≥0}
     {innerLangIn : Set (LogupSumcheckStmtIn F n M params ×
@@ -186,7 +191,7 @@ theorem issue13_soundness_msgSeam_wiredSumcheck [oSpec.Fintype]
         innerLangIn (Set.univ) rbrSoundnessError)
     (himplSP : ∀ (t : oSpec.Domain) (s : σ) (x : oSpec.Range t × σ),
       x ∈ support ((impl t).run s) → x.2 = s)
-    (himplNF : ∀ (t : oSpec.Domain) (s : σ), Pr[⊥ | (impl t).run s] = 0)
+    (himplNF : ∀ (t : oSpec.Domain) (s : σ), prFail ((impl t).run s) = 0)
     (himplVB : ∀ (t : oSpec.Domain) (s s' : σ),
       evalDist ((impl t).run' s) = evalDist ((impl t).run' s')) :
     (logupVerifier oSpec F n M params).soundness init impl
@@ -207,7 +212,7 @@ canonical inner input language
 `logupSumcheckInputLanguage F n M params (Fact.out : (-1 : F) ≠ 1)`, i.e. the generic sumcheck
 round-0 relation.  The remaining inputs are the union-bound error equation, the inner multi-round
 RBR theorem into `Set.univ`, and the standard honest-`impl` marginal-bridge side conditions. -/
-theorem issue13_sumcheckSoundnessResidual_projClosed [oSpec.Fintype]
+theorem issue13_sumcheckSoundnessResidual_projClosed [∀ q, Fintype (oSpec.Range q)]
     (sumcheckSoundnessError : ℝ≥0)
     {rbrSoundnessError : (logupSumcheckPSpec F n M params).ChallengeIdx → ℝ≥0}
     (hError : sumcheckSoundnessError = ∑ i, rbrSoundnessError i)
@@ -218,7 +223,7 @@ theorem issue13_sumcheckSoundnessResidual_projClosed [oSpec.Fintype]
         (Set.univ) rbrSoundnessError)
     (himplSP : ∀ (t : oSpec.Domain) (s : σ) (x : oSpec.Range t × σ),
       x ∈ support ((impl t).run s) → x.2 = s)
-    (himplNF : ∀ (t : oSpec.Domain) (s : σ), Pr[⊥ | (impl t).run s] = 0)
+    (himplNF : ∀ (t : oSpec.Domain) (s : σ), prFail ((impl t).run s) = 0)
     (himplVB : ∀ (t : oSpec.Domain) (s s' : σ),
       evalDist ((impl t).run' s) = evalDist ((impl t).run' s')) :
     SumcheckSoundnessResidual oSpec F n M params init impl sumcheckSoundnessError :=
@@ -238,7 +243,7 @@ embedded-sumcheck soundness from:
 
 The conclusion has additive error `outerError + sumcheckSoundnessError`, exactly matching the
 language-generic message-seam composition theorem. -/
-theorem issue13_soundness_msgSeam_anyMid_wiredRoundAppend [oSpec.Fintype]
+theorem issue13_soundness_msgSeam_anyMid_wiredRoundAppend [∀ q, Fintype (oSpec.Range q)]
     (langMid : Set (StmtAfterOuter F n M params × (∀ i, OStmtAfterOuter F n M params i)))
     (outerError sumcheckSoundnessError : ℝ≥0)
     (lang : (i : Fin (n + 1)) →
@@ -273,7 +278,7 @@ theorem issue13_soundness_msgSeam_anyMid_wiredRoundAppend [oSpec.Fintype]
           (Sum.elim e₁ e₂ ∘ ChallengeIdx.sumEquiv.symm))
     (himplSP : ∀ (t : oSpec.Domain) (s : σ) (x : oSpec.Range t × σ),
       x ∈ support ((impl t).run s) → x.2 = s)
-    (himplNF : ∀ (t : oSpec.Domain) (s : σ), Pr[⊥ | (impl t).run s] = 0)
+    (himplNF : ∀ (t : oSpec.Domain) (s : σ), prFail ((impl t).run s) = 0)
     (himplVB : ∀ (t : oSpec.Domain) (s s' : σ),
       evalDist ((impl t).run' s) = evalDist ((impl t).run' s')) :
     (logupVerifier oSpec F n M params).soundness init impl
@@ -292,7 +297,7 @@ This specializes `issue13_soundness_msgSeam_anyMid_wiredRoundAppend` to the curr
 `midSoundnessProtocolLanguage` and paper-shaped outer error.  Compared with
 `issue13_soundness_msgSeam_wiredSumcheck`, it no longer assumes the opaque inner multi-round RBR
 fact directly. -/
-theorem issue13_soundness_msgSeam_wiredRoundAppend [oSpec.Fintype]
+theorem issue13_soundness_msgSeam_wiredRoundAppend [∀ q, Fintype (oSpec.Range q)]
     (sumcheckSoundnessError : ℝ≥0)
     (lang : (i : Fin (n + 1)) →
       Set (Sumcheck.Spec.StatementRound F n i ×
@@ -329,7 +334,7 @@ theorem issue13_soundness_msgSeam_wiredRoundAppend [oSpec.Fintype]
           (Sum.elim e₁ e₂ ∘ ChallengeIdx.sumEquiv.symm))
     (himplSP : ∀ (t : oSpec.Domain) (s : σ) (x : oSpec.Range t × σ),
       x ∈ support ((impl t).run s) → x.2 = s)
-    (himplNF : ∀ (t : oSpec.Domain) (s : σ), Pr[⊥ | (impl t).run s] = 0)
+    (himplNF : ∀ (t : oSpec.Domain) (s : σ), prFail ((impl t).run s) = 0)
     (himplVB : ∀ (t : oSpec.Domain) (s s' : σ),
       evalDist ((impl t).run' s) = evalDist ((impl t).run' s')) :
     (logupVerifier oSpec F n M params).soundness init impl
@@ -346,7 +351,7 @@ This version uses the support-cleared sharp outer language from `OuterSoundnessS
 language for which the paper-sized Schwartz–Zippel outer bound is proved.  The remaining hypotheses
 state the two protocol-level compatibility facts not hidden by the algebra: outer soundness into the
 sharp language, and projection soundness of the embedded sumcheck from that same sharp language. -/
-theorem issue13_soundness_msgSeam_sharp_wiredRoundAppend [oSpec.Fintype]
+theorem issue13_soundness_msgSeam_sharp_wiredRoundAppend [∀ q, Fintype (oSpec.Range q)]
     (sumcheckSoundnessError : ℝ≥0)
     (lang : (i : Fin (n + 1)) →
       Set (Sumcheck.Spec.StatementRound F n i ×
@@ -383,7 +388,7 @@ theorem issue13_soundness_msgSeam_sharp_wiredRoundAppend [oSpec.Fintype]
           (Sum.elim e₁ e₂ ∘ ChallengeIdx.sumEquiv.symm))
     (himplSP : ∀ (t : oSpec.Domain) (s : σ) (x : oSpec.Range t × σ),
       x ∈ support ((impl t).run s) → x.2 = s)
-    (himplNF : ∀ (t : oSpec.Domain) (s : σ), Pr[⊥ | (impl t).run s] = 0)
+    (himplNF : ∀ (t : oSpec.Domain) (s : σ), prFail ((impl t).run s) = 0)
     (himplVB : ∀ (t : oSpec.Domain) (s s' : σ),
       evalDist ((impl t).run' s) = evalDist ((impl t).run' s')) :
     (logupVerifier oSpec F n M params).soundness init impl
@@ -437,7 +442,7 @@ remaining assumptions are the non-degeneracy `0 < n`, standard initialization/su
 the honest-`impl` side conditions required by the message-seam completeness keystone — all of which
 are *satisfiable* (see `logup_completeness_final_instantiable`,
 `LogupCompletenessFinal.lean`, for a concrete `ZMod 5` instantiation). -/
-theorem issue13_completeness_wired [oSpec.Fintype] [oSpec.Inhabited]
+theorem issue13_completeness_wired [∀ q, Fintype (oSpec.Range q)] [∀ q, Inhabited (oSpec.Range q)]
     (hInit : NeverFail init)
     (hImplSupp : ∀ {β} (q : OracleQuery oSpec β) s,
       Prod.fst <$> support ((QueryImpl.mapQuery impl q).run s)
@@ -445,7 +450,7 @@ theorem issue13_completeness_wired [oSpec.Fintype] [oSpec.Inhabited]
     (hn : 0 < n)
     (himplSP : ∀ (t : oSpec.Domain) (s : σ) (x : oSpec.Range t × σ),
       x ∈ support ((impl t).run s) → x.2 = s)
-    (himplNF : ∀ (t : oSpec.Domain) (s : σ), Pr[⊥ | (impl t).run s] = 0)
+    (himplNF : ∀ (t : oSpec.Domain) (s : σ), prFail ((impl t).run s) = 0)
     (himplVB : ∀ (t : oSpec.Domain) (s s' : σ),
       evalDist ((impl t).run' s) = evalDist ((impl t).run' s')) :
     (logupOracleReduction oSpec F n M params).completeness init impl

@@ -1,7 +1,7 @@
 {
   "note": "Upstream-inherited sorry/admit holes imported by ArkLib integration; tracked by downstream issue #2. Exact upstream revision and file hashes bind ordinary entries. In reviewed downstream_adaptations, unchanged admitted commands additionally require their original full declaration name and exact stripped-command SHA256; each token must remain inside that command. New or changed admitted commands are never baselined.",
   "repository": "https://github.com/Verified-zkEVM/ArkLib",
-  "revision": "94fb4cdd70c2ea061037bf6337611300d71c4e88",
+  "revision": "78835bdb3a4d24ea9dd2977db4c46029eb8de5db",
   "issue": "https://github.com/SlopDotCash/proximityprize/issues/2",
   "holes": [
     {

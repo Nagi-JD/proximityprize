@@ -86,8 +86,11 @@ declaration exists, and deploys the static `home_page/` (with `docs/` and
 reach `main`. CI explicitly builds `ArkLibBlueprint` before the declaration check. On
 main pushes, a following step adds `ArkLibBlueprint:docs` in the same isolated `docbuild`
 project and copies the combined output before upload, since the pinned action selects only
-default-target API facets. The local preview builds `ArkLib:docs` then
-`ArkLibBlueprint:docs` sequentially for the same coverage; both facets update shared indexes.
+default-target API facets. The local preview selects the same four default-library facets
+(`ArkLib:docs`, `ArkLibExtensions:docs`, `ResearchProximityPrize:docs`, and
+`ProximityPrizeExtensions:docs`) plus `ArkLibBlueprint:docs` in one locked build.
+The glob-only `ArkLibExtensions` library has no umbrella roots; its classic APIs appear in
+the documentation when imported by the selected Research or ProximityPrize roots.
 
 ### Blueprint LaTeX gotchas
 

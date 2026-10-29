@@ -273,6 +273,78 @@ class ImportInputsRunImportGate(unittest.TestCase):
                 self.assertTrue(workflow_runs_for_path("ci.yml", "merge_group", path))
 
 
+class ProvenanceCheckoutHistory(unittest.TestCase):
+    """Full validation must have the Git objects used by the inherited-debt gates."""
+
+    def assert_full_history_checkout(self, workflow: str, job: str):
+        lines = (WORKFLOWS / workflow).read_text().splitlines()
+        start = next(i for i, line in enumerate(lines) if line == f"  {job}:")
+        body = yaml_block(lines, start)
+        steps = [yaml_block(body, i) for i, line in enumerate(body)
+                 if line.startswith("      - ")]
+        checkouts = [step for step in steps
+                     if any(re.match(r"\s*(?:- )?uses: actions/checkout@", line)
+                            for line in step)]
+        self.assertTrue(checkouts, f"{workflow}/{job} has no source checkout")
+        for checkout in checkouts:
+            self.assertTrue(any(re.fullmatch(r"\s*fetch-depth: [\"']?0[\"']?", line)
+                                for line in checkout),
+                            f"{workflow}/{job} cannot read the pinned upstream history")
+
+    def test_validation_and_import_jobs_fetch_pinned_history(self):
+        for workflow, job in [("ci.yml", "build"),
+                              ("check-imports.yml", "check-imports"),
+                              ("incidence-research.yml", "kernel"),
+                              ("sponsor-finite.yml", "kernel")]:
+            with self.subTest(workflow=workflow, job=job):
+                self.assert_full_history_checkout(workflow, job)
+
+    def test_shallow_manual_validator_checkout_is_rejected(self):
+        source = (WORKFLOWS / "incidence-research.yml").read_text()
+        with tempfile.TemporaryDirectory(prefix="ci-history-test-") as tmp:
+            root = Path(tmp)
+            for depth in [None, "1"]:
+                changed = (source.replace("        with:\n          fetch-depth: 0\n", "", 1)
+                           if depth is None else
+                           source.replace("fetch-depth: 0", "fetch-depth: 1", 1))
+                (root / "incidence-research.yml").write_text(changed)
+                with self.subTest(depth=depth), patch(__name__ + ".WORKFLOWS", root):
+                    with self.assertRaisesRegex(AssertionError, "pinned upstream history"):
+                        self.assert_full_history_checkout("incidence-research.yml", "kernel")
+
+
+class LeanCachePaths(unittest.TestCase):
+    """Every restored or saved Lean cache omits Lake's regenerated setup files."""
+
+    def test_lean_cache_paths_exclude_setup_files(self):
+        checked = set()
+        for workflow in WORKFLOWS.glob("*.yml"):
+            lines = workflow.read_text().splitlines()
+            for i, line in enumerate(lines):
+                if not line.startswith("      - "):
+                    continue
+                step = yaml_block(lines, i)
+                if not any("uses: actions/cache" in item for item in step):
+                    continue
+                start = next((j for j, item in enumerate(step)
+                              if item.strip().startswith("path:")), None)
+                if start is None:
+                    continue
+                paths = [item.strip() for item in yaml_block(step, start)[1:]
+                         if item.strip() and not item.strip().startswith("#")]
+                positives = [item for item in paths if item.startswith(".lake")]
+                if step[start].strip() == "path: .lake":
+                    positives.append(".lake")
+                for path in positives:
+                    with self.subTest(workflow=workflow.name, path=path):
+                        self.assertIn(f"!{path}/**/*.setup.json", paths)
+                    checked.add(workflow.name)
+        self.assertTrue({"ci.yml", "interaction.yml", "incidence-research.yml",
+                         "sponsor-finite.yml", "sponsor-weighted.yml",
+                         "multiline-rank-kernel.yml", "first-sponsor-udr.yml",
+                         "six-error-support-multiplicity.yml"}.issubset(checked))
+
+
 class UnconditionalScopeFallback(unittest.TestCase):
     """Timing metadata and skipped commands must not masquerade as a validation gate."""
 

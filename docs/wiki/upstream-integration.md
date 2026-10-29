@@ -44,6 +44,8 @@ Git tree, checks every canonical source blob, rejects imports from canonical mod
 downstream or test code, and checks the local import graph for missing modules and cycles.
 The normal import gate runs it. After committing the merge, add `--require-ancestor` to verify
 that the upstream snapshot is part of the actual Git history.
+Every CI job invoking `validate.sh` or the provenance gate must check out full history
+(`fetch-depth: 0`) so the pinned upstream Git blobs are available on a fresh runner.
 
 For a separate public-name ownership audit, run
 `python3 scripts/integration/audit_public_declarations.py --output scripts/integration/public-declaration-audit.json`.
@@ -92,6 +94,20 @@ and exact-witness data with a proved one-way implication. The native final-query
 still excludes failure and fixes every successful output. The
 [caller audit](../../scripts/integration/full12-binius-fri-caller-migration.json) preserves all
 original commands and distinguishes source/overlay checks from package validation.
+
+Native Binary Basefold query execution delegates canonical chronological completeness and
+support proofs. The retained historical state predicate and single-repetition probability bound
+live under `QueryPhase.Historical`; they describe the historical low-row-bit convention. Its
+pure guard/fold/terminal lemmas use explicit newest-first slices and the lower-case historical
+`strictFinalSumcheckRelOutProp`. The old execution-to-historical-check lemmas are retired rather
+than identifying incompatible matrix layouts. Native fiber support and zero-failure helpers use
+the canonical simulation and `OptionT` laws. The `BiniusChallengeOrder` and `FRIBiniusEncoding`
+regressions distinguish the conventions. Both full-protocol completeness clients use the native
+query theorem with their canonical strict final relation. The
+[query execution audit](../../scripts/integration/binius-query-execution-consolidation.json) and
+[folding audit](../../scripts/integration/binius-query-folding-migration.json) archive original
+commands and their dispositions. The historical probability bound retains both its
+no-folding-consistency and no-bad-event hypotheses.
 
 The canonical `disagreement_fold_subset_fiberwiseDisagreement` statement now formally requires
 `Fact (β 0 = 1)` because its quotient-fiber set uses that normalized basis. The previous general
@@ -145,6 +161,12 @@ Finite-uniform PMF conclusions retain their explicit normalized-count bridge. Ge
 probability observers use `Type`, as required by `EvalDistSemantics`; pure simulation and
 structural support laws retain their higher-universe generality. The exact mappings and retained
 names are recorded in [the probability migration audit](../../scripts/integration/probability-api-migration.json).
+
+Preserve existing `DecidableEq` instances when transporting a protocol challenge to its field.
+A fresh instance can change implicit `Finset` parameters and turn a small predicate comparison
+into expensive polynomial unfolding. Supply only the challenge metadata inference actually
+needs; the [LogUp outer port](../../scripts/integration/full20-logup-outer-malicious-native-port.json)
+records a checked example at the default Lean heartbeat budget.
 
 The [permutation migration audit](../../scripts/integration/lazy-permutation-migration.json)
 records the native eager–lazy bridge and the retired completed-SPMF observers. Its finite
@@ -374,3 +396,23 @@ canonical command hashes are recorded in
 [the evaluation-claim mapping](../../scripts/integration/spartan-send-eval-claim-migration.json) and
 [the linear-combination mapping](../../scripts/integration/spartan-linear-combination-migration.json).
 These receipts do not assert completion of the inherited canonical admitted constructors.
+
+Large concrete finite types need symbolic cardinality transport before instantiation. Prove the
+whole dimension or syndrome implication over `Fin n`, rewrite `Fintype.card_fin` while `n` is a
+variable, and only then instantiate a production length such as `2^30`. Otherwise definitional
+comparison of a numeric budget with `Fintype.card (Fin (2^30))` can enumerate the finite type.
+The G87 syndrome bridge follows this pattern without changing its nineteen public contracts;
+its exact original source, twelve axiom reports, and separate source/package validation status
+are recorded in [the G87 migration audit](../../scripts/integration/g87-syndrome-symbolic-migration.json).
+
+Evaluation-code parameters also need their precise convention: `KKH26.evalCode g n d` uses
+degree at most `d`, whereas `rsCode dom k` uses degree below `k`. For positive `k`,
+`Ownership.evalCode_pred_eq_rsCode` proves the `k - 1` conversion while `k` is symbolic, before
+specializing a large dimension. The four canonical incidence clients reuse that owner without
+changing their numeric bounds ([caller audit](../../scripts/integration/full21-incidence-evaluation-code-ports.json)).
+
+The same symbolic boundary applies to large polynomial locators: prove their degree, exact root
+set, and whole codeword membership for an arbitrary number of factors before instantiating a
+production finite set. The full-scale incidence construction keeps all fifty-five public
+contracts and its original kernel certificate while using these private symbolic proofs; see
+[the locator migration audit](../../scripts/integration/incidence-full-scale-symbolic-migration.json).

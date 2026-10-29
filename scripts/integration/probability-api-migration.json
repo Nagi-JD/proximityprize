@@ -2099,5 +2099,6 @@
     },
     "pure_knowledge_pointer": "scripts/integration/pure-knowledge-consolidation.json",
     "scope": "Current-source temporary compiled-import checks are separate from final package validation. The original named residuals and explicit premises remain open where not proved."
-  }
+  },
+  "full21_logup_entry_point_ports": "scripts/integration/full21-logup-native-probability-ports.json"
 }

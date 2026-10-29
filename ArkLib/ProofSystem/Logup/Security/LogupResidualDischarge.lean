@@ -20,6 +20,11 @@ finite regression are recorded in
 open scoped NNReal ENNReal
 open OracleComp OracleSpec ProtocolSpec
 
+-- Preserve the original whole-value equality observation within this module.
+private local instance (A : Type) : MeasurableSpace A := ⊤
+private local instance (A : Type) : @DiscreteMeasurableSpace A ⊤ :=
+  ⟨fun _ => True.intro⟩
+
 namespace Logup
 
 section ResidualDischarge
@@ -43,7 +48,7 @@ theorem outerSoundnessResidual_holds
     (hpole : 2 ^ n < Fintype.card F) (hnK : n ≤ params.numGroups)
     (himplSP : ∀ (t : oSpec.Domain) (s : σ) (x : oSpec.Range t × σ),
       x ∈ support ((impl t).run s) → x.2 = s)
-    (himplNF : ∀ (t : oSpec.Domain) (s : σ), Pr[⊥ | (impl t).run s] = 0)
+    (himplNF : ∀ (t : oSpec.Domain) (s : σ), prFail ((impl t).run s) = 0)
     (himplVB : ∀ (t : oSpec.Domain) (s s' : σ),
       evalDist ((impl t).run' s) = evalDist ((impl t).run' s')) :
     OuterSoundnessResidual oSpec F n M params init impl :=
