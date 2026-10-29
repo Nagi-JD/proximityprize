@@ -427,7 +427,11 @@ because of stale cached output.
 ## Manual Timing Helper
 
 If you need to reproduce the timing workflow locally, the same helper script can
-capture a measurement and render a report:
+capture a measurement and render a report. Its default command labels match the plain
+Lake commands measured by isolated CI. Run the following reproduction only on a machine
+where no other agent can build; use the locked wrapper for routine shared-machine builds.
+Set `BUILD_TIMING_NATIVE_COMMAND` and `BUILD_TIMING_TEST_COMMAND` to match any custom
+native-build or validation commands, so the report describes what was measured:
 
 ```bash
 export BUILD_TIMING_LOG_DIR=/tmp/build-timing

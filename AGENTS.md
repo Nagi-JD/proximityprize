@@ -100,10 +100,10 @@ that cone — it has the build recipe you need to avoid clogging the machine:
   `Research/ProximityPrize/Frontier/README.md` and
   `Research/ProximityPrize/PROXIMITY_PRIZE_WORKBENCH.lean` §5 for the detailed lane history and substrate.
 - **Open-residual map (whole project):**
-  [`docs/wiki/residual-census.md`](docs/wiki/residual-census.md) — 117 strict residuals:
-  69 open / 47 discharged / 1 refuted (regenerated and audited 2026-08-16); the "named
-  residual" convention is modularity, not incompleteness, and the strict syntactic census is
-  not the production-theorem completion ledger.
+  [`docs/wiki/residual-census.md`](docs/wiki/residual-census.md) — the generated census owns
+  current counts and audited provider statuses. The "named residual" convention is modularity,
+  not incompleteness, and the strict syntactic census is not the production-theorem completion
+  ledger.
 
 ## Deeper Docs
 

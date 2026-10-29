@@ -179,6 +179,10 @@ BUILD_TIMING_LOG_DIR="$full_dir" \
 grep -Fq -- '- Build cache: none restored, so the library build is a full build.' \
   "$fixture_tmp/full.md"
 grep -Fq -- 'Clean-build compile time, summed over all 5 modules: 48s.' "$fixture_tmp/full.md"
+# The default labels describe the commands CI actually times. The earlier fixture's
+# explicit locked-wrapper override must remain distinguishable from these defaults.
+grep -Fq -- '- Commands: library build `lake build`; native build `lake build toyproblem-runtime hachi-runtime sumcheck-runtime fri-extractor-runtime lint-style`; validation wrapper `./scripts/validate.sh`.' \
+  "$fixture_tmp/full.md"
 
 up_to_date_dir="$fixture_tmp/up-to-date"
 cp -R "$current_dir" "$up_to_date_dir"
@@ -247,8 +251,11 @@ PY
 grep -Fq 'pullRequest.head.sha !== run.head_sha' .github/workflows/build-timing-report.yml
 grep -Fq 'runPullRequest?.base?.sha || pullRequest.base.sha' \
   .github/workflows/build-timing-report.yml
-grep -Fq 'BUILD_TIMING_NATIVE_COMMAND: ./scripts/lake-locked.sh build toyproblem-runtime hachi-runtime sumcheck-runtime fri-extractor-runtime lint-style' \
+grep -Fq 'BUILD_TIMING_NATIVE_COMMAND: lake build toyproblem-runtime hachi-runtime sumcheck-runtime fri-extractor-runtime lint-style' \
   .github/workflows/build-timing-report.yml
+grep -Fq "bash -eo pipefail -c 'lake build'" .github/workflows/ci.yml
+grep -Fq "bash -eo pipefail -c 'lake build toyproblem-runtime hachi-runtime sumcheck-runtime fri-extractor-runtime lint-style'" \
+  .github/workflows/ci.yml
 if grep -Fq 'the previous successful PR update' .github/workflows/build-timing-report.yml; then
   echo 'reporter must not silently use a moving previous-PR baseline' >&2
   exit 1
