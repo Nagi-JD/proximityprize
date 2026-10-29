@@ -73,7 +73,7 @@ content-free; the GS-exposed prize is meaningful only with a *faithfulness* cons
 (`FaithfulGSFamily`) forcing `L` to be the actual (poly-size) GS list. -/
 theorem exists_list_epsMCAgs_le (C : Set (ι → A)) (δ : ℝ≥0) (B : ENNReal) :
     ∃ L : WordStack A (Fin 2) ι → Finset (ι → A), epsMCAgs (F := F) C δ L ≤ B :=
-  ⟨fun _ => (∅ : Finset (ι → A)), by rw [epsMCAgs_emptyList_eq_zero]; exact zero_le B⟩
+  ⟨fun _ => (∅ : Finset (ι → A)), by rw [epsMCAgs_emptyList_eq_zero]; exact zero_le⟩
 
 /-- **`epsMCAgs` is monotone in the radius `δ`.** A larger radius only weakens the size clause
 `|S| ≥ (1 - δ)·n` of `mcaEventGSrow` (the witness-in-`L` and no-row clauses are `δ`-free), so the
