@@ -31,6 +31,8 @@ jobs:
     permissions:
       contents: read
     env:
+      # A Research compiler imports roughly 6.4 GiB; avoid multiplying that on a 16 GB runner.
+      LEAN_NUM_THREADS: '1'
       CLEAN_BUILD: ${{ github.event_name == 'schedule' || inputs.clean_build == true }}
 
     steps:

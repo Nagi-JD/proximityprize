@@ -188,8 +188,10 @@ theorem evalCode_deltaStar_eq_half_of_predecessor_badCount_le
     mcaDeltaStar_le_half_of_floor_eq_length hg hQ hk hnEven hfloor hkquarter hsupply
   exact le_antisymm hupper hlower
 
-/-- Normalize the positive dimension before specializing the power-domain code. -/
-private theorem evalCode_pred_eq_reedSolomon {p n k : ℕ} [Fact p.Prime] [NeZero n]
+/-- A positive-dimensional power-domain Reed–Solomon code is the KKH evaluation code
+of degree at most `k - 1`. The dimension cancellation is proved for symbolic `k`, so callers
+can specialize large dimensions without reducing them inside the code representation. -/
+theorem evalCode_pred_eq_reedSolomon {p n k : ℕ} [Fact p.Prime] [NeZero n]
     (g : ZMod p) (hg : orderOf g = n) (hg0 : g ≠ 0) (hk : 0 < k) :
     evalCode g n (k - 1) =
       (ReedSolomon.code (ProximityGap.KKH26RegimeSplit.powDomain g hg hg0) k :
@@ -414,6 +416,8 @@ theorem secondPrime_rateSixteenth_half_lt_deltaStar :
 end ArkLib.ProximityGap.Frontier.PrizeShapeLowRateExactPins
 
 /-! ## Axiom audit -/
+
+#print axioms ArkLib.ProximityGap.Frontier.PrizeShapeLowRateExactPins.evalCode_pred_eq_reedSolomon
 
 #print axioms
   ArkLib.ProximityGap.Frontier.PrizeShapeLowRateExactPins.evalCode_deltaStar_eq_half_of_predecessor_badCount_le

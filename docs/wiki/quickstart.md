@@ -14,6 +14,7 @@ Use `./scripts/lake-locked.sh build <targets>` and
 `./scripts/lake-locked.sh exe cache get` for local builds and cache fetches. The
 wrapper serializes each checkout and limits builds across the machine. Keep this
 checkout's Lean 4.35 dependencies separate from older Lean 4.30 build artifacts.
+These locks limit Lake invocations; they do not set the compiler-worker pool within each build.
 On a cold checkout, fetch the cache before building. For repeated research proof
 iteration, use `scripts/pg-warm.sh` once and `scripts/pg-iterate.sh <file.lean>`.
 The warm-up script prints the full build log on failure and preserves the build exit status;
@@ -338,6 +339,14 @@ python3 -m pip install leanblueprint
 ```
 
 ## CI Mapping
+
+Main CI sets `LEAN_NUM_THREADS=1` for its whole build job. Research import closures were
+measured at roughly 6.4 GiB per compiler process during integration, so per-CPU parallelism
+does not fit the 16 GB runner. The pinned Lean runtime otherwise
+[defaults Lake's task pool to the hardware concurrency](https://github.com/leanprover/lean4/blob/v4.35.0/src/runtime/object.cpp#L1037-L1052).
+This worker limit applies to the initial build and the validation wrapper; the checkout and
+machine locks separately limit simultaneous Lake invocations. All four libraries remain in
+the default build.
 
 - [`../../.github/workflows/ci.yml`](../../.github/workflows/ci.yml)
   runs the timing-enabled main build on PRs, merge groups, pushes to `main`, and a nightly

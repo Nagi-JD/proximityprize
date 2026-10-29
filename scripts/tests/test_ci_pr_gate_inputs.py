@@ -14,6 +14,7 @@ import shlex
 import subprocess
 import tempfile
 import textwrap
+import tomllib
 import unittest
 from unittest.mock import patch
 
@@ -343,6 +344,20 @@ class LeanCachePaths(unittest.TestCase):
                          "sponsor-finite.yml", "sponsor-weighted.yml",
                          "multiline-rank-kernel.yml", "first-sponsor-udr.yml",
                          "six-error-support-multiplicity.yml"}.issubset(checked))
+
+
+class ResearchBuildResourceBudget(unittest.TestCase):
+    def test_main_research_build_has_one_job_level_lake_worker(self):
+        config = tomllib.loads((REPO / "lakefile.toml").read_text())
+        self.assertIn("ResearchProximityPrize", config["defaultTargets"])
+        lines = (WORKFLOWS / "ci.yml").read_text().splitlines()
+        start = next(i for i, line in enumerate(lines) if line == "  build:")
+        body = yaml_block(lines, start)
+        env = next(i for i, line in enumerate(body) if line == "    env:")
+        self.assertIn("      LEAN_NUM_THREADS: '1'", yaml_block(body, env))
+        for line in body:
+            if re.match(r"\s*LEAN_NUM_THREADS:", line):
+                self.assertRegex(line, r"^\s*LEAN_NUM_THREADS: [\"']?1[\"']?$")
 
 
 class UnconditionalScopeFallback(unittest.TestCase):
