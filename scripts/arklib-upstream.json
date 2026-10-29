@@ -1,6 +1,6 @@
 {
   "repository": "https://github.com/Verified-zkEVM/ArkLib",
-  "revision": "94fb4cdd70c2ea061037bf6337611300d71c4e88",
+  "revision": "78835bdb3a4d24ea9dd2977db4c46029eb8de5db",
   "files": [
     "ArkLib/AGM/Basic.lean",
     "ArkLib/Commitments/Functional/Basic.lean",
