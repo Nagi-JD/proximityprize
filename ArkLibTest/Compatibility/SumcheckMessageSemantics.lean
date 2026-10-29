@@ -38,7 +38,8 @@ theorem input_claim_is_false :
     (((0, fun _ => inputPolynomial), ())) ∉
       Sumcheck.Spec.SingleRound.Simple.inputRelation (ZMod 2) 1 domain := by
   change (∑ x ∈ Finset.univ.map domain, Polynomial.eval x inputPolynomial.val) ≠ 0
-  simp [domain, inputPolynomial]
+  simp only [domain, Finset.univ_unique, Fin.default_eq_zero, Fin.isValue, Finset.map_singleton,
+    inputPolynomial, eval_X, Finset.sum_singleton, ne_eq]
   change (1 : ZMod 2) ≠ 0
   decide
 
