@@ -69,14 +69,16 @@ ArkLib.ProofSystem.Binius.FRIBinius.General Binius.FRIBinius.FullFRIBinius.fullO
 ArkLib.ProofSystem.Binius.FRIBinius.General Binius.FRIBinius.FullFRIBinius.fullOracleVerifier_rbrKnowledgeSoundness_wired
 
 # Refuted legacy Binius input-relation conversion.
-ArkLib.ProofSystem.Binius.FRIBinius.CoreInteractionPhase Binius.FRIBinius.CoreInteractionPhase.sumcheckFold_input_bridge_counterexample
+ArkLib.ProofSystem.Binius.FRIBinius.CoreInteractionPhase Binius.FRIBinius.CoreInteractionPhase.sumcheckFold_legacy_input_bridge_counterexample
 
 # Decoded Binius folding chain reaches the extracted polynomial evaluation.
 ProximityPrize.Extensions.ProofSystem.Binius.BinaryBasefold.Steps.FinalSumcheck Binius.BinaryBasefold.CoreInteraction.extracted_t_poly_eval_eq_final_constant
 
-# Successful Binius query steps preserve the fold and reach the final constant.
-ProximityPrize.Extensions.ProofSystem.Binius.BinaryBasefold.QueryPhase.Folding Binius.BinaryBasefold.QueryPhase.query_phase_step_preserves_fold
-ProximityPrize.Extensions.ProofSystem.Binius.BinaryBasefold.QueryPhase.Folding Binius.BinaryBasefold.QueryPhase.query_phase_final_fold_eq_constant
+# Native query execution preserves its guard, and canonical logical folding reaches the next fold.
+# The historical final-constant theorem retains its explicitly different challenge/bit order.
+ArkLib.ProofSystem.Binius.BinaryBasefold.QueryPhase.Execution Binius.BinaryBasefold.QueryPhase.checkSingleFoldingStep_simulate
+ArkLib.ProofSystem.Binius.BinaryBasefold.QueryPhase.Folding Binius.BinaryBasefold.QueryPhase.logicalComputeFoldedValue_eq_totalFold_of_strictConsistency
+ProximityPrize.Extensions.ProofSystem.Binius.BinaryBasefold.QueryPhase.Folding Binius.BinaryBasefold.QueryPhase.Historical.query_phase_final_fold_eq_constant
 
 # Arithmetic target bound is distinct from the unresolved scalar-security premise.
 ArkLib.ProofSystem.Binius.FRIBinius.General Binius.FRIBinius.FullFRIBinius.fullRbrKnowledgeError_sum_le_concrete

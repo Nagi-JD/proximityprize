@@ -109,6 +109,11 @@ query theorem with their canonical strict final relation. The
 commands and their dispositions. The historical probability bound retains both its
 no-folding-consistency and no-bad-event hypotheses.
 
+The flagship kernel audit pins native query execution and chronological folding separately,
+alongside the explicitly historical counterexample and terminal-fold result. The
+[pin migration record](../../scripts/integration/flagship-native-query-pins.json) tracks all
+replacements; the audit now checks 57 declarations without dropping any unaffected entry.
+
 The canonical `disagreement_fold_subset_fiberwiseDisagreement` statement now formally requires
 `Fact (β 0 = 1)` because its quotient-fiber set uses that normalized basis. The previous general
 positive-step statement is retained as
